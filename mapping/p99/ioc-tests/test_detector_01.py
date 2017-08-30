@@ -1,7 +1,7 @@
 from pkg_resources import require
 require('cothread==2.13')
-import unittest
 from cothread import catools
+import unittest
 
 
 DETECTOR_MODEL = "DC-152Q-C00-FI"
