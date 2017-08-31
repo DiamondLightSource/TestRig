@@ -1,16 +1,20 @@
 from pkg_resources import require
 require('cothread==2.13')
 from cothread import catools
+from processvariable import *
 
 
-def get_pv_values(pvs):
-    return caget([pv.get_name() for pv in pvs])
+def get_pv_values(pv_list):
+    return caget(generate_name_list(pv_list))
 
 def get_pv_value(pv):
     return caget(pv.get_name())
 
-def set_pv_values(pvs, values):
-    caput_sync([])
+def set_pvs_to_defaults(pv_list):
+    set_pv_values(generate_name_list(pv_list), generate_defaults_lists(pv_list))
+
+def set_pv_values(pv_list, values):
+    caput_sync(generate_name_list(pv_list), values)
 
 def set_pv_value(pv, value):
     caput_sync(pv.get_name(), value)

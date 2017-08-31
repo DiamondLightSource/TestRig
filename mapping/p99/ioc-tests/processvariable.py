@@ -1,11 +1,9 @@
 def generate_name_list(pv_list):
     return [pv.get_name() for pv in pv_list]
 
+
 def generate_defaults_lists(pv_list):
-    return (
-        [pv.get_name() for pv in pv_list],
-        [pv.get_default_value() for pv in pv_list]
-    )
+    return [pv.get_default_value() for pv in pv_list]
 
 
 class ProcessVariable:
