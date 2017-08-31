@@ -6,9 +6,13 @@ PV_MODEL_NAME = "BL99P-EA-DET-01Model_RBV"
 PV_PORT_NAME = "BL99P-EA-DET-01PortName_RBV"
 
 
+def reset_cam_to_defaults():
+    pass
+
+
 class TestDetector(unittest.TestCase):
     def setUp(self):
-        pass
+        reset_cam_to_defaults()
 
 
 class TestIoc(unittest.TestCase):
