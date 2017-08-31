@@ -18,10 +18,10 @@ class TestDetector(unittest.TestCase):
 
 class TestIoc(unittest.TestCase):
     def test_ioc_active(self):
-        print caget(PV_PORT_NAME)
+        print get_pv_value(PV_PORT_NAME)
 
     def test_ioc_camera_connected(self):
-        self.assertEqual(caget(PV_MODEL_NAME), DETECTOR_MODEL, "The IOC has not detected the camera")
+        self.assertEqual(get_pv_value(PV_MODEL_NAME), DETECTOR_MODEL, "The IOC has not detected the camera")
 
 
 class TestCapture(unittest.TestCase):
