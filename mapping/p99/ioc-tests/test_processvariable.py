@@ -1,12 +1,10 @@
 import unittest
 from processvariable import *
 
-SECOND_PV_DEFAULT_VALUE = False
-
-SECOND_PV_NAME = "secondtest"
-
 FIRST_PV_NAME = "testname"
 FIRST_PV_DEFAULT_VALUE = 123
+SECOND_PV_NAME = "secondtest"
+SECOND_PV_DEFAULT_VALUE = False
 
 
 class TestProcessVariable(unittest.TestCase):
