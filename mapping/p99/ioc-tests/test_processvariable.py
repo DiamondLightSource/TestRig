@@ -1,5 +1,5 @@
 import unittest
-from process_variable import *
+from processvariable import *
 
 DEFAULT_TEST_PV_NAME = "testname"
 
