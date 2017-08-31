@@ -1,0 +1,2 @@
+class ProcessVariable:
+    pass
