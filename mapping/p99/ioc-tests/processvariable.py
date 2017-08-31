@@ -1,3 +1,6 @@
+def generate_name_list(pv_list):
+    return [pv.get_name() for pv in pv_list]
+
 def generate_defaults_lists(pv_list):
     return (
         [pv.get_name() for pv in pv_list],
