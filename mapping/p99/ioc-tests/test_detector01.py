@@ -1,7 +1,5 @@
 import unittest
 from malcolmtest import *
-from malcolm.modules.ADAndor.blocks import andor_detector_driver_block
-
 
 class TestCamera(AndorDetectorTestCase):
     def test_set_exposure_to_zero(self):
