@@ -11,10 +11,17 @@ class TestCamera(AndorDetectorTestCase):
     def test_set_exposure_to_negative(self):
         self.do_set_exposure(0, -0.1)
 
-    #def test_set_acquisition_period_greater_than_exposure(self):
-    #    self.do_set_exposure(0.5, 0.5)
-    #    self._detector.acquirePeriod.put_value(0.6)
-    #    self.assert_acquisition_period(0.6)
+    def test_set_acquisition_period_greater_than_exposure_limit(self):
+        self.do_set_exposure(0.5, 0.5)
+        self.do_set_acquisition_period(0.51, 0.6)
+
+    def test_set_acquisition_period_within_exposure_limit(self):
+        self.do_set_exposure(0.5, 0.5)
+        self.do_set_acquisition_period(0.501, 0.501)
+
+    def do_set_acquisition_period(self, expected, actual):
+        self._detector.acquirePeriod.put_value(actual)
+        self.assert_acquisition_period(expected)
 
     def do_set_exposure(self, expected, value):
         self._detector.exposure.put_value(value)
@@ -27,4 +34,4 @@ class TestCamera(AndorDetectorTestCase):
         self.assert_almost_equal(expected, self._detector.exposure.value)
 
     def assert_almost_equal(self, expected, actual):
-        self.assertAlmostEqual(expected, actual, 4)
+        self.assertAlmostEqual(expected, actual, 3)
