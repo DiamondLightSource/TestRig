@@ -1,5 +1,6 @@
 import unittest
 from malcolm.core import Process
+from malcolm.modules.ADAndor.blocks import andor_detector_driver_block
 
 
 class MalcolmTestCase(unittest.TestCase):
