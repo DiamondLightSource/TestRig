@@ -11,12 +11,13 @@ class TestCamera(AndorDetectorTestCase):
     def test_set_exposure_to_negative(self):
         self.do_set_exposure(0, -0.1)
 
-    # NOTE: THESE TWO TESTS ARE DISABLED AS THEY FAIL DUE TO A KNOWN BUG!
-    #def test_set_acquisition_period_to_zero(self):
-    #    self.do_set_acquisition_period_and_exposure(0.5, 0.5, 0)
-
-    #def test_set_acquisition_period_to_negative(self):
-    #    self.do_set_acquisition_period_and_exposure(0.5, 0.5, -0.5)
+    @unittest.skip("Skipping this due to a known bug. Jira:http://jira.diamond.ac.uk/browse/P99-7?jql=project%20%3D%20P99")
+    def test_set_acquisition_period_to_zero(self):
+        self.do_set_acquisition_period_and_exposure(0.5, 0.5, 0)
+    
+    @unittest.skip("Skipping this due to a known bug. Jira:http://jira.diamond.ac.uk/browse/P99-7?jql=project%20%3D%20P99")
+    def test_set_acquisition_period_to_negative(self):
+        self.do_set_acquisition_period_and_exposure(0.5, 0.5, -0.5)
 
     def test_set_acquisition_period_greater_than_exposure_limit(self):
         self.do_set_acquisition_period_and_exposure(0.5, 0.51, 0.6)
