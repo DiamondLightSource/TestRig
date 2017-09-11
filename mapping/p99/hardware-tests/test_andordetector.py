@@ -1,6 +1,7 @@
 import unittest
 from malcolmtest import *
 
+
 class TestCamera(AndorDetectorTestCase):
     def test_set_exposure_to_zero(self):
         self.do_set_exposure_check(0)
@@ -11,11 +12,13 @@ class TestCamera(AndorDetectorTestCase):
     def test_set_exposure_to_negative(self):
         self.do_set_exposure(0, -0.1)
 
-    @unittest.skip("Skipping this due to a known bug. Jira:http://jira.diamond.ac.uk/browse/P99-7?jql=project%20%3D%20P99")
+    @unittest.skip(
+        "Skipping this due to a known bug. Jira:http://jira.diamond.ac.uk/browse/P99-7?jql=project%20%3D%20P99")
     def test_set_acquisition_period_to_zero(self):
         self.do_set_acquisition_period_and_exposure(0.5, 0.5, 0)
-    
-    @unittest.skip("Skipping this due to a known bug. Jira:http://jira.diamond.ac.uk/browse/P99-7?jql=project%20%3D%20P99")
+
+    @unittest.skip(
+        "Skipping this due to a known bug. Jira:http://jira.diamond.ac.uk/browse/P99-7?jql=project%20%3D%20P99")
     def test_set_acquisition_period_to_negative(self):
         self.do_set_acquisition_period_and_exposure(0.5, 0.5, -0.5)
 
@@ -27,6 +30,10 @@ class TestCamera(AndorDetectorTestCase):
 
     def test_set_acquisition_period_less_than_exposure(self):
         self.do_set_acquisition_period_and_exposure(0.5, 0.5, 0.4)
+
+    def test_set_num_images_less_than_zero(self):
+        self._detector.numImages.put_value(-1)
+        self.assertEqual(-1, self._detector.numImages.value)
 
     def do_set_acquisition_period_and_exposure(self, exposure, expected_acquisition_period, actual_acquisition_period):
         self.do_set_exposure_check(exposure)
