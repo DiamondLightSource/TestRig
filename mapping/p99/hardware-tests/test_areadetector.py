@@ -34,8 +34,14 @@ class AreaDetectorTestCase(MalcolmTestCase):
         self.do_set_acquisition_period_and_exposure(0.5, 0.5, 0.4)
 
     def test_set_num_images_less_than_zero(self):
-        self._detector.numImages.put_value(-1)
-        self.assertEqual(-1, self._detector.numImages.value)
+        self.do_set_num_images(-1, -1)
+
+    def test_set_num_images_to_zero(self):
+        self.do_set_num_images(0, 0)
+
+    def do_set_num_images(self, expected, actual):
+        self._detector.numImages.put_value(actual)
+        self.assertEqual(expected, self._detector.numImages.value)
 
     def do_set_acquisition_period_and_exposure(self, exposure, expected_acquisition_period, actual_acquisition_period):
         self.do_set_exposure_check(exposure)
