@@ -1,6 +1,7 @@
 import unittest
-from malcolm.core import Process
+from malcolm.core import Process, call_with_params
 from malcolm.modules.ADAndor.blocks import andor_detector_driver_block
+from malcolm.yamlutil import make_include_creator
 
 
 class MalcolmTestCase(unittest.TestCase):
@@ -35,6 +36,9 @@ class MalcolmTestCase(unittest.TestCase):
 class MalcolmBlockFactory:
     def __init__(self, process):
         self._process = process
+
+    def load_blocks(self, yaml_path):
+        call_with_params(make_include_creator(yaml_path), self._process)
 
     def make_andor_driver_block(self, mri, prefix):
         return self.make_block(andor_detector_driver_block, {
