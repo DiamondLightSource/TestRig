@@ -5,25 +5,40 @@ from malcolm.modules.ADAndor.blocks import andor_detector_driver_block
 
 class MalcolmTestCase(unittest.TestCase):
     def setUp(self):
-        self._process = Process("malcolm-test")
+        self.init_malcolm_process()
+        self.init_block_factory()
         self.init_blocks()
-        self._process.start()
+        self.start_malcolm_process()
 
     def tearDown(self):
-        self._process.stop()
+        self.stop_malcolm_process()
+
+    def init_malcolm_process(self):
+        self._process = Process("malcolm-test")
+
+    def init_block_factory(self):
+        self._block_factory = MalcolmBlockFactory(self._process)
 
     def init_blocks(self):
         pass
 
+    def start_malcolm_process(self):
+        self._process.start()
 
-class AndorDetectorTestCase(MalcolmTestCase):
-    def init_blocks(self):
-        self._detector = self.register_driver_block()
+    def stop_malcolm_process(self):
+        self._process.stop()
 
-    def register_driver_block(self):
-        mri = "ANDOR"
-        andor_detector_driver_block(self._process, {
+
+class MalcolmBlockFactory:
+    def __init__(self, process):
+        self._process = process
+
+    def make_andor_driver_block(self, mri, prefix):
+        return self.make_block(andor_detector_driver_block, {
             "mri": mri,
-            "prefix": "BL99P-EA-DET-01:DET:CAM"
+            "prefix": prefix
         })
-        return self._process.block_view(mri)
+
+    def make_block(self, block_function, params):
+        block_function(self._process, params)
+        return self._process.block_view(params["mri"])
