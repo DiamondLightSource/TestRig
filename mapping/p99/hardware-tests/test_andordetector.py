@@ -7,4 +7,4 @@ class AndorDetectorTestCase(AreaDetectorTestCase):
 
     def init_blocks(self):
         self._block_factory.load_blocks("test-yaml-configs/bl99p-ea-det-01.yaml")
-        self._detector = self._process.block_view("ANDOR:DRV")
+        self._camera = self._process.block_view("ANDOR:DRV")
