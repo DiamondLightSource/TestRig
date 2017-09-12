@@ -57,6 +57,3 @@ class AreaDetectorTestCase(MalcolmTestCase):
 
     def assert_exposure(self, expected):
         self.assert_almost_equal(expected, self._detector.exposure.value)
-
-    def assert_almost_equal(self, expected, actual):
-        self.assertAlmostEqual(expected, actual, 3)

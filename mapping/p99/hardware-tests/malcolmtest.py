@@ -4,6 +4,9 @@ from malcolm.modules.ADAndor.blocks import andor_detector_driver_block
 
 
 class MalcolmTestCase(unittest.TestCase):
+    def init_blocks(self):
+        pass
+
     def setUp(self):
         self.init_malcolm_process()
         self.init_block_factory()
@@ -19,14 +22,14 @@ class MalcolmTestCase(unittest.TestCase):
     def init_block_factory(self):
         self._block_factory = MalcolmBlockFactory(self._process)
 
-    def init_blocks(self):
-        pass
-
     def start_malcolm_process(self):
         self._process.start()
 
     def stop_malcolm_process(self):
         self._process.stop()
+
+    def assert_almost_equal(self, expected, actual):
+        self.assertAlmostEqual(expected, actual, 3)
 
 
 class MalcolmBlockFactory:
