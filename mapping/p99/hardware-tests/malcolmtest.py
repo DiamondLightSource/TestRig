@@ -60,7 +60,7 @@ class MalcolmTestCase(unittest.TestCase):
     def restore_state(cls):
         pass
 
-    def tearDown(self):
+    def setUp(self):
         self.restore_state()
 
     def assert_almost_equal(self, expected, actual):
