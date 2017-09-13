@@ -41,6 +41,15 @@ class AreaDetectorTestCase(MalcolmTestCase):
     def test_set_num_images_to_zero(self):
         self.do_set_num_images(0, 0)
 
+    def test_set_num_images_to_more_than_zero(self):
+        self.do_set_num_images(1, 1)
+
+    def test_acquire_zero_images(self):
+        self.do_set_num_images(0, 0)
+        self._camera.start()
+        self._camera.when_value_matches("arrayCounter", 1, timeout=5)
+        self._camera.stop()
+
     def do_set_num_images(self, expected, actual):
         self._camera.numImages.put_value(actual)
         self.assertEqual(expected, self._camera.numImages.value)
