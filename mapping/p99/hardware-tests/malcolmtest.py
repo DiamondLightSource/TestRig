@@ -8,13 +8,21 @@ class MalcolmTestCase(unittest.TestCase):
     def init_blocks(self):
         pass
 
+    def save_state(self):
+        pass
+
+    def restore_state(self):
+        pass
+
     def setUp(self):
         self.init_malcolm_process()
         self.init_block_factory()
         self.init_blocks()
         self.start_malcolm_process()
+        self.save_state()
 
     def tearDown(self):
+        self.restore_state()
         self.stop_malcolm_process()
 
     def init_malcolm_process(self):
