@@ -1,59 +1,67 @@
 import unittest
 from malcolm.core import Process, call_with_params
-from malcolm.modules.ADAndor.blocks import andor_detector_driver_block
 from malcolm.yamlutil import make_include_creator
 
 
-class MalcolmTestCase(unittest.TestCase):
-    def init_blocks(self):
-        pass
+class MalcolmConnection:
+    def __init__(self, name):
+        self._process = Process(name)
 
-    def save_state(self):
-        pass
+    def action(self, callback):
+        self.open()
+        callback()
+        self.close()
 
-    def restore_state(self):
-        pass
-
-    def setUp(self):
-        self.init_malcolm_process()
-        self.init_block_factory()
-        self.init_blocks()
-        self.start_malcolm_process()
-        self.save_state()
-
-    def tearDown(self):
-        self.restore_state()
-        self.stop_malcolm_process()
-
-    def init_malcolm_process(self):
-        self._process = Process("malcolm-test")
-
-    def init_block_factory(self):
-        self._block_factory = MalcolmBlockFactory(self._process)
-
-    def start_malcolm_process(self):
+    def open(self):
         self._process.start()
 
-    def stop_malcolm_process(self):
+    def close(self):
         self._process.stop()
-
-    def assert_almost_equal(self, expected, actual):
-        self.assertAlmostEqual(expected, actual, 3)
 
 
 class MalcolmBlockFactory:
     def __init__(self, process):
         self._process = process
 
-    def load_blocks(self, yaml_path):
+    def load_yaml(self, yaml_path):
         call_with_params(make_include_creator(yaml_path), self._process)
 
-    def make_andor_driver_block(self, mri, prefix):
-        return self.make_block(andor_detector_driver_block, {
-            "mri": mri,
-            "prefix": prefix
-        })
+    def block_view(self, block_mri):
+        return self._process.block_view(block_mri)
 
-    def make_block(self, block_function, params):
-        block_function(self._process, params)
-        return self._process.block_view(params["mri"])
+
+class MalcolmInteraction(MalcolmConnection, MalcolmBlockFactory):
+    pass
+
+
+class MalcolmTestCase(unittest.TestCase):
+    _malcolm = None
+
+    @classmethod
+    def setUpClass(cls):
+        cls._malcolm = MalcolmInteraction("Test Case")
+        cls._malcolm.open()
+        cls.set_up_blocks()
+        cls.save_state()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._malcolm.close()
+
+    @classmethod
+    def set_up_blocks(cls):
+        pass
+
+    @classmethod
+    def save_state(cls):
+        pass
+
+    @classmethod
+    def restore_state(cls):
+        pass
+
+    def tearDown(self):
+        self.restore_state()
+
+    def assert_almost_equal(self, expected, actual):
+        self.assertAlmostEqual(expected, actual, 3)

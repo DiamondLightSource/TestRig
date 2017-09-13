@@ -3,10 +3,9 @@ from malcolmtest import MalcolmTestCase
 
 
 class AreaDetectorTestCase(MalcolmTestCase):
+    _detector = None
+    _camera = None
     __test__ = False
-
-    def init_blocks(self):
-        self._camera = None
 
     def test_set_exposure_to_zero(self):
         self.do_set_exposure_check(0)
