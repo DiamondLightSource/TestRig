@@ -23,6 +23,6 @@ class AndorDetectorTestCase(AreaDetectorTestCase):
     @classmethod
     def restore_state(cls):
         # arrayCounter is a non-standard value as it is changed by the camera and not the user.
-        # It's not treated as configurable by malcolm.
+        # It's not treated as configurable by malcolm, so it isn't saved like other variables.
         cls._camera.arrayCounter.put_value(0)
         cls._detector.design.put_value(cls.ANDOR_DEFAULTS_SAVE)
