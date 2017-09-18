@@ -8,6 +8,8 @@ require('cothread==2.14')
 from cothread import catools
 from time import sleep
 import urllib
+import sys
+import os
 
 SNAPSHOT_URL = "http://p99-control.diamond.ac.uk:8094/WEB1.mjpg.jpg"
 
@@ -21,7 +23,7 @@ ACQUIRE = "%sAcquire" % PREFIX
 JPG_URL = "BL99P-DI-WEB-01:MJPG:JPG_URL_RBV"
 
 
-def capture():
+def capture(path):
     # Set up camera
     print "Setting up camera"
     caput([
@@ -50,6 +52,8 @@ def capture():
     # Download captured frame
     print "Downloading frame"
     urllib.urlretrieve(SNAPSHOT_URL, "snapshot.jpg")
+    print "Saving to webcam folder"
+    os.rename("snapshot.jpg")
 
 
 def caput(pvs, values):
@@ -63,5 +67,6 @@ def caget(pvs):
 def resolve_pv(name):
     return "%s%s" % (PREFIX, name)
 
-
-capture()
+if __name__ == '__main__':
+    path = str(sys.argv[1])
+    capture(path)
