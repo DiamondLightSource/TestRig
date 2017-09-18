@@ -51,9 +51,7 @@ def capture(path):
 
     # Download captured frame
     print "Downloading frame"
-    urllib.urlretrieve(SNAPSHOT_URL, "snapshot.jpg")
-    print "Saving to webcam folder"
-    os.rename("snapshot.jpg")
+    urllib.urlretrieve(SNAPSHOT_URL, path)
 
 
 def caput(pvs, values):
