@@ -46,8 +46,11 @@ class AreaDetectorTestCase(MalcolmTestCase):
 
     def test_acquire_zero_images(self):
         self.do_set_num_images(0, 0)
+        self.do_acquire_frames(1, 5)
+
+    def do_acquire_frames(self, expected_num_frames, timeout):
         self._camera.start()
-        self._camera.when_value_matches("arrayCounter", 1, timeout=5)
+        self.assert_array_counter_wait(expected_num_frames, timeout)
         self._camera.stop()
 
     def do_set_num_images(self, expected, actual):
@@ -74,3 +77,10 @@ class AreaDetectorTestCase(MalcolmTestCase):
 
     def assert_exposure(self, expected):
         self.assert_almost_equal(expected, self._camera.exposure.value)
+
+    def assert_array_counter_wait(self, expected_num_frames, timeout):
+        self._camera.when_value_matches("arrayCounter", expected_num_frames, timeout=timeout)
+        self.assert_array_counter(expected_num_frames)
+
+    def assert_array_counter(self, expected):
+        self.assertEqual(expected, self._camera.arrayCounter.value)
