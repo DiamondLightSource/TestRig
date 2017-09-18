@@ -1,6 +1,8 @@
 import unittest
 from malcolmtest import MalcolmTestCase
 
+TIMEOUT_A_FEW_FRAMES = 5
+
 
 class AreaDetectorTestCase(MalcolmTestCase):
     _detector = None
@@ -46,7 +48,19 @@ class AreaDetectorTestCase(MalcolmTestCase):
 
     def test_acquire_zero_images(self):
         self.do_set_num_images(0, 0)
-        self.do_acquire_frames(1, 5)
+        self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
+
+    def test_acquire_negative_images(self):
+        self.do_set_num_images(-1, -1)
+        self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
+
+    def test_acquire_one_image(self):
+        self.do_set_num_images(0, 0)
+        self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
+
+    def test_acquire_multiple_images(self):
+        self.do_set_num_images(2, 2)
+        self.do_acquire_frames(2, TIMEOUT_A_FEW_FRAMES)
 
     def do_acquire_frames(self, expected_num_frames, timeout):
         self._camera.start()
