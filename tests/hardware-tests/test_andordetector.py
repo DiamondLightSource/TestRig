@@ -3,13 +3,10 @@ import unittest
 from malcolmtest import MalcolmTestCase
 
 TIMEOUT_A_FEW_FRAMES = 5
+ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
 
 
 class AndorDetectorTestCase(MalcolmTestCase):
-    ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
-
-    __test__ = True
-
     @classmethod
     def set_up_blocks(cls):
         cls._malcolm.load_yaml("config/hardware-control-config/bl99p-ea-det-01.yaml")
@@ -18,14 +15,14 @@ class AndorDetectorTestCase(MalcolmTestCase):
 
     @classmethod
     def save_state(cls):
-        cls._detector.save(cls.ANDOR_DEFAULTS_SAVE)
+        cls._detector.save(ANDOR_DEFAULTS_SAVE)
 
     @classmethod
     def restore_state(cls):
         # arrayCounter is a non-standard value as it is changed by the camera and not the user.
         # It's not treated as configurable by malcolm, so it isn't saved like other variables.
         cls._camera.arrayCounter.put_value(0)
-        cls._detector.design.put_value(cls.ANDOR_DEFAULTS_SAVE)
+        cls._detector.design.put_value(ANDOR_DEFAULTS_SAVE)
 
     def test_set_exposure_to_zero(self):
         self.do_set_exposure_check(0)
