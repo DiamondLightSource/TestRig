@@ -1,4 +1,4 @@
 - ADAndor.blocks.andor_detector_runnable_block:
     mriPrefix: ANDOR
     pvPrefix: BL99P-EA-DET-01
-    configDir: test-configs
+    configDir: config/saves

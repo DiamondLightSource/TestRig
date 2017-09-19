@@ -12,7 +12,7 @@ class AndorDetectorTestCase(AreaDetectorTestCase):
 
     @classmethod
     def set_up_blocks(cls):
-        cls._malcolm.load_yaml("test-yaml-configs/bl99p-ea-det-01.yaml")
+        cls._malcolm.load_yaml("config/hardware-control-config/bl99p-ea-det-01.yaml")
         cls._detector = cls._malcolm.block_view("ANDOR")
         cls._camera = cls._malcolm.block_view("ANDOR:DRV")
 
