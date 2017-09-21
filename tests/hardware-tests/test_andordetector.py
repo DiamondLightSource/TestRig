@@ -77,7 +77,7 @@ class AndorDetectorTestCase(MalcolmTestCase):
         self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_one_image(self):
-        self.assert_set_num_images_sets_num_images(0, 0)
+        self.assert_set_num_images_sets_num_images(1, 1)
         self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_multiple_images(self):
