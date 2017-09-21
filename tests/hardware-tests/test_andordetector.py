@@ -27,89 +27,85 @@ class AndorDetectorTestCase(MalcolmTestCase):
         cls._detector.design.put_value(ANDOR_DEFAULTS_SAVE)
 
     def test_set_exposure_to_zero(self):
-        self.do_set_exposure_check(0)
+        self.assert_set_exposure_sets_exposure(0, 0)
 
     def test_set_exposure_to_positive(self):
-        self.do_set_exposure_check(0.1)
+        self.assert_set_exposure_sets_exposure(1, 1)
 
     def test_set_exposure_to_negative(self):
-        self.do_set_exposure(0, -0.1)
+        self.assert_set_exposure_sets_exposure(0, -1)
 
     @unittest.skip(
         "Skipping this due to a known bug. Jira:http://jira.diamond.ac.uk/browse/P99-7?jql=project%20%3D%20P99")
-    def test_set_acquisition_period_to_zero(self):
-        self.do_set_acquisition_period_and_exposure(0.5, 0.5, 0)
+    def test_set_acquire_period_to_zero(self):
+        self.assert_set_exposure_sets_exposure(0.5, 0.5)
+        self.assert_set_acquire_period_sets_acquire_period(0.5, 0)
 
     @unittest.skip(
         "Skipping this due to a known bug. Jira:http://jira.diamond.ac.uk/browse/P99-7?jql=project%20%3D%20P99")
-    def test_set_acquisition_period_to_negative(self):
-        self.do_set_acquisition_period_and_exposure(0.5, 0.5, -0.5)
+    def test_set_acquire_period_to_negative(self):
+        self.assert_set_exposure_sets_exposure(0.5, 0.5)
+        self.assert_set_acquire_period_sets_acquire_period(0.5, -0.5)
 
-    def test_set_acquisition_period_greater_than_exposure_limit(self):
-        self.do_set_acquisition_period_and_exposure(0.5, 0.51, 0.6)
+    def test_set_acquire_period_greater_than_exposure_limit(self):
+        self.assert_set_exposure_sets_exposure(0.5, 0.5)
+        self.assert_set_acquire_period_sets_acquire_period(0.51, 0.6)
 
-    def test_set_acquisition_period_within_exposure_limit(self):
-        self.do_set_acquisition_period_and_exposure(0.5, 0.501, 0.501)
+    def test_set_acquire_period_within_exposure_limit(self):
+        self.assert_set_exposure_sets_exposure(0.5, 0.5)
+        self.assert_set_acquire_period_sets_acquire_period(0.501, 0.501)
 
-    def test_set_acquisition_period_less_than_exposure(self):
-        self.do_set_acquisition_period_and_exposure(0.5, 0.5, 0.4)
+    def test_set_acquire_period_less_than_exposure(self):
+        self.assert_set_exposure_sets_exposure(0.5, 0.5)
+        self.assert_set_acquire_period_sets_acquire_period(0.5, 0.4)
 
     def test_set_num_images_less_than_zero(self):
-        self.do_set_num_images(-1, -1)
+        self.assert_set_num_images_sets_num_images(-1, -1)
 
     def test_set_num_images_to_zero(self):
-        self.do_set_num_images(0, 0)
+        self.assert_set_num_images_sets_num_images(0, 0)
 
     def test_set_num_images_to_more_than_zero(self):
-        self.do_set_num_images(1, 1)
+        self.assert_set_num_images_sets_num_images(1, 1)
 
     def test_acquire_zero_images(self):
-        self.do_set_num_images(0, 0)
+        self.assert_set_num_images_sets_num_images(0, 0)
         self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_negative_images(self):
-        self.do_set_num_images(-1, -1)
+        self.assert_set_num_images_sets_num_images(-1, -1)
         self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_one_image(self):
-        self.do_set_num_images(0, 0)
+        self.assert_set_num_images_sets_num_images(0, 0)
         self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_multiple_images(self):
-        self.do_set_num_images(2, 2)
+        self.assert_set_num_images_sets_num_images(2, 2)
         self.do_acquire_frames(2, TIMEOUT_A_FEW_FRAMES)
 
     def do_acquire_frames(self, expected_num_frames, timeout):
         self._camera.start()
-        self.assert_array_counter_wait(expected_num_frames, timeout)
+        self.assert_array_counter_reaches(expected_num_frames, timeout)
         self._camera.stop()
 
-    def do_set_num_images(self, expected, actual):
-        self._camera.numImages.put_value(actual)
-        self.assertEqual(expected, self._camera.numImages.value)
+    def assert_set_exposure_sets_exposure(self, expected_readback_value, demand_value):
+        exposure = self._camera.exposure
+        self.assert_set_attribute_sets_attribute(exposure, demand_value, expected_readback_value)
 
-    def do_set_acquisition_period_and_exposure(self, exposure, expected_acquisition_period, actual_acquisition_period):
-        self.do_set_exposure_check(exposure)
-        self.do_set_acquisition_period(expected_acquisition_period, actual_acquisition_period)
+    def assert_set_acquire_period_sets_acquire_period(self, expected_readback_value, demand_value):
+        acquire_period = self._camera.acquirePeriod
+        self.assert_set_attribute_sets_attribute(acquire_period, demand_value, expected_readback_value)
 
-    def do_set_acquisition_period(self, expected, actual):
-        self._camera.acquirePeriod.put_value(actual)
-        self.assert_acquisition_period(expected)
+    def assert_set_num_images_sets_num_images(self, expected_readback_value, demand_value):
+        num_images = self._camera.numImages
+        self.assert_set_attribute_sets_attribute(num_images, demand_value, expected_readback_value)
 
-    def do_set_exposure_check(self, value):
-        self.do_set_exposure(value, value)
+    def assert_set_attribute_sets_attribute(self, attribute, demand_value, expected_readback_value):
+        attribute.put_value(demand_value)
+        self.assertAlmostEqual(expected_readback_value, attribute.value, 3)
 
-    def do_set_exposure(self, expected, value):
-        self._camera.exposure.put_value(value)
-        self.assert_exposure(expected)
-
-    def assert_acquisition_period(self, expected):
-        self.assert_almost_equal(expected, self._camera.acquirePeriod.value)
-
-    def assert_exposure(self, expected):
-        self.assert_almost_equal(expected, self._camera.exposure.value)
-
-    def assert_array_counter_wait(self, expected_num_frames, timeout):
+    def assert_array_counter_reaches(self, expected_num_frames, timeout):
         self._camera.when_value_matches("arrayCounter", expected_num_frames, timeout=timeout)
         self.assert_array_counter(expected_num_frames)
 

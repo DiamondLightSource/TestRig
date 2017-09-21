@@ -60,6 +60,3 @@ class MalcolmTestCase(unittest.TestCase):
 
     def setUp(self):
         self.restore_state()
-
-    def assert_almost_equal(self, expected, actual):
-        self.assertAlmostEqual(expected, actual, 3)
