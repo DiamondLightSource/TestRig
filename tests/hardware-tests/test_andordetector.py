@@ -70,21 +70,21 @@ class AndorDetectorTestCase(MalcolmTestCase):
 
     def test_acquire_zero_images(self):
         self.assert_set_num_images_sets_num_images(0, 0)
-        self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
+        self.acquire_n_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_negative_images(self):
         self.assert_set_num_images_sets_num_images(-1, -1)
-        self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
+        self.acquire_n_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_one_image(self):
         self.assert_set_num_images_sets_num_images(1, 1)
-        self.do_acquire_frames(1, TIMEOUT_A_FEW_FRAMES)
+        self.acquire_n_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_multiple_images(self):
         self.assert_set_num_images_sets_num_images(2, 2)
-        self.do_acquire_frames(2, TIMEOUT_A_FEW_FRAMES)
+        self.acquire_n_frames(2, TIMEOUT_A_FEW_FRAMES)
 
-    def do_acquire_frames(self, expected_num_frames, timeout):
+    def acquire_n_frames(self, expected_num_frames, timeout):
         self._camera.start()
         self.assert_array_counter_reaches(expected_num_frames, timeout)
         self._camera.stop()
