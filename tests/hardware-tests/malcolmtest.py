@@ -11,11 +11,6 @@ class MalcolmConnection:
     def __init__(self, name):
         self._process = Process(name)
 
-    def action(self, callback):
-        self.open()
-        callback()
-        self.close()
-
     def open(self):
         self._process.start()
 
