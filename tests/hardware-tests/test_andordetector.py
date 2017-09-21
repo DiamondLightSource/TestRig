@@ -1,6 +1,6 @@
 import unittest
 
-from malcolmtest import MalcolmTestCase
+from malcolmtest import MalcolmTestCase, make_block_factory_from_connection
 
 TIMEOUT_A_FEW_FRAMES = 5
 ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
@@ -9,9 +9,10 @@ ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
 class AndorDetectorTestCase(MalcolmTestCase):
     @classmethod
     def set_up_blocks(cls):
-        cls._malcolm.load_yaml("config/hardware-control-config/bl99p-ea-det-01.yaml")
-        cls._detector = cls._malcolm.block_view("ANDOR")
-        cls._camera = cls._malcolm.block_view("ANDOR:DRV")
+        block_factory = make_block_factory_from_connection(cls._malcolm)
+        block_factory.load_yaml("config/hardware-control-config/bl99p-ea-det-01.yaml")
+        cls._detector = block_factory.block_view("ANDOR")
+        cls._camera = block_factory.block_view("ANDOR:DRV")
 
     @classmethod
     def save_state(cls):
