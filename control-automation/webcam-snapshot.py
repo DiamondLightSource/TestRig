@@ -45,14 +45,13 @@ def capture(path):
     # Check frame captured
     if caget(ARRAY_COUNTER_RBV) != 1:
         print "Failed to capture image"
-        return
+        sys.exit(1)
     else:
         print "Capture complete"
 
     # Download captured frame
     print "Downloading frame"
     urllib.urlretrieve(SNAPSHOT_URL, path)
-
 
 def caput(pvs, values):
     catools.caput(pvs, values, wait=True)
