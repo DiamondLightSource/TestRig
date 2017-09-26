@@ -35,29 +35,9 @@ class AndorDetectorTestCase(MalcolmTestCase):
     def test_set_exposure_to_negative(self):
         self.assert_set_exposure_sets_exposure(0, -1)
 
-    @unittest.skip(
-        "Skipping this due to a known bug. Jira:http://jira.diamond.ac.uk/browse/P99-7?jql=project%20%3D%20P99")
-    def test_set_acquire_period_to_zero(self):
+    def test_acquire_period_follows_exposure(self):
         self.assert_set_exposure_sets_exposure(0.5, 0.5)
-        self.assert_set_acquire_period_sets_acquire_period(0.5, 0)
-
-    @unittest.skip(
-        "Skipping this due to a known bug. Jira:http://jira.diamond.ac.uk/browse/P99-7?jql=project%20%3D%20P99")
-    def test_set_acquire_period_to_negative(self):
-        self.assert_set_exposure_sets_exposure(0.5, 0.5)
-        self.assert_set_acquire_period_sets_acquire_period(0.5, -0.5)
-
-    def test_set_acquire_period_greater_than_exposure_limit(self):
-        self.assert_set_exposure_sets_exposure(0.5, 0.5)
-        self.assert_set_acquire_period_sets_acquire_period(0.51, 0.6)
-
-    def test_set_acquire_period_within_exposure_limit(self):
-        self.assert_set_exposure_sets_exposure(0.5, 0.5)
-        self.assert_set_acquire_period_sets_acquire_period(0.501, 0.501)
-
-    def test_set_acquire_period_less_than_exposure(self):
-        self.assert_set_exposure_sets_exposure(0.5, 0.5)
-        self.assert_set_acquire_period_sets_acquire_period(0.5, 0.4)
+        self.assert_set_exposure_sets_acquire_period(0.5, 0.5)
 
     def test_set_num_images_less_than_zero(self):
         self.assert_set_num_images_sets_num_images(-1, -1)
@@ -89,21 +69,33 @@ class AndorDetectorTestCase(MalcolmTestCase):
         self.assert_array_counter_reaches(expected_num_frames, timeout)
         self._camera.stop()
 
-    def assert_set_exposure_sets_exposure(self, expected_readback_value, demand_value):
+    def assert_set_exposure_sets_exposure(self, expected_readback_value, demand_value=None):
         exposure = self._camera.exposure
-        self.assert_set_attribute_sets_attribute(exposure, demand_value, expected_readback_value)
+        self.assert_set_attribute_sets_attribute(exposure, expected_readback_value, demand_value)
 
-    def assert_set_acquire_period_sets_acquire_period(self, expected_readback_value, demand_value):
+    def assert_set_exposure_sets_acquire_period(self, expected_acquire_period_readback_value,
+                                                exposure_demand_value=None):
+        exposure = self._camera.exposure
         acquire_period = self._camera.acquirePeriod
-        self.assert_set_attribute_sets_attribute(acquire_period, demand_value, expected_readback_value)
+        self.assert_set_attribute_sets_attribute(exposure, expected_acquire_period_readback_value,
+                                                 exposure_demand_value, acquire_period)
 
-    def assert_set_num_images_sets_num_images(self, expected_readback_value, demand_value):
+    def assert_set_acquire_period_sets_acquire_period(self, expected_readback_value, demand_value=None):
+        acquire_period = self._camera.acquirePeriod
+        self.assert_set_attribute_sets_attribute(acquire_period, expected_readback_value, demand_value)
+
+    def assert_set_num_images_sets_num_images(self, expected_readback_value, demand_value=None):
         num_images = self._camera.numImages
-        self.assert_set_attribute_sets_attribute(num_images, demand_value, expected_readback_value)
+        self.assert_set_attribute_sets_attribute(num_images, expected_readback_value, demand_value)
 
-    def assert_set_attribute_sets_attribute(self, attribute, demand_value, expected_readback_value):
+    def assert_set_attribute_sets_attribute(self, attribute, expected_readback_value, demand_value=None,
+                                            attribute_to_read=None):
+        if demand_value is None:
+            demand_value = expected_readback_value
+        if attribute_to_read is None:
+            attribute_to_read = attribute
         attribute.put_value(demand_value)
-        self.assertAlmostEqual(expected_readback_value, attribute.value, 3)
+        self.assertAlmostEqual(expected_readback_value, attribute_to_read.value, 3)
 
     def assert_array_counter_reaches(self, expected_num_frames, timeout):
         self._camera.when_value_matches("arrayCounter", expected_num_frames, timeout=timeout)
