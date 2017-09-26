@@ -27,41 +27,41 @@ class AndorDetectorTestCase(MalcolmTestCase):
         cls._detector.design.put_value(ANDOR_DEFAULTS_SAVE)
 
     def test_set_exposure_to_zero(self):
-        self.assert_set_exposure_sets_exposure(0, 0)
+        self.assert_set_exposure_sets_exposure(0)
 
     def test_set_exposure_to_positive(self):
-        self.assert_set_exposure_sets_exposure(1, 1)
+        self.assert_set_exposure_sets_exposure(1)
 
     def test_set_exposure_to_negative(self):
         self.assert_set_exposure_sets_exposure(0, -1)
 
     def test_acquire_period_follows_exposure(self):
-        self.assert_set_exposure_sets_exposure(0.5, 0.5)
+        self.assert_set_exposure_sets_exposure(0.5)
         self.assert_set_exposure_sets_acquire_period(0.5, 0.5)
 
     def test_set_num_images_less_than_zero(self):
-        self.assert_set_num_images_sets_num_images(-1, -1)
+        self.assert_set_num_images_sets_num_images(-1)
 
     def test_set_num_images_to_zero(self):
-        self.assert_set_num_images_sets_num_images(0, 0)
+        self.assert_set_num_images_sets_num_images(0)
 
     def test_set_num_images_to_more_than_zero(self):
-        self.assert_set_num_images_sets_num_images(1, 1)
+        self.assert_set_num_images_sets_num_images(1)
 
     def test_acquire_zero_images(self):
-        self.assert_set_num_images_sets_num_images(0, 0)
+        self.assert_set_num_images_sets_num_images(0)
         self.acquire_n_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_negative_images(self):
-        self.assert_set_num_images_sets_num_images(-1, -1)
+        self.assert_set_num_images_sets_num_images(-1)
         self.acquire_n_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_one_image(self):
-        self.assert_set_num_images_sets_num_images(1, 1)
+        self.assert_set_num_images_sets_num_images(1)
         self.acquire_n_frames(1, TIMEOUT_A_FEW_FRAMES)
 
     def test_acquire_multiple_images(self):
-        self.assert_set_num_images_sets_num_images(2, 2)
+        self.assert_set_num_images_sets_num_images(2)
         self.acquire_n_frames(2, TIMEOUT_A_FEW_FRAMES)
 
     def acquire_n_frames(self, expected_num_frames, timeout):
@@ -74,7 +74,7 @@ class AndorDetectorTestCase(MalcolmTestCase):
         self.assert_set_attribute_sets_attribute(exposure, expected_readback_value, demand_value)
 
     def assert_set_exposure_sets_acquire_period(self, expected_acquire_period_readback_value,
-                                                exposure_demand_value=None):
+                                                exposure_demand_value):
         exposure = self._camera.exposure
         acquire_period = self._camera.acquirePeriod
         self.assert_set_attribute_sets_attribute(exposure, expected_acquire_period_readback_value,
