@@ -75,9 +75,9 @@ class AndorDetectorTestCase(MalcolmTestCase):
     def assert_acquires_number_of_frames_in_fixed_image_mode(self, expected_number_of_images, demand_number_of_images):
         # Set image mode to fixed here!
         self.assert_set_num_images_sets_num_images(demand_number_of_images)
-        self.acquire_n_frames(expected_number_of_images)
+        self.assert_acquires_number_of_frames(expected_number_of_images)
 
-    def acquire_n_frames(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
+    def assert_acquires_number_of_frames(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
         self._camera.start()
         self.assert_array_counter_reaches(expected_num_frames, timeout)
         self._camera.stop()
@@ -114,5 +114,5 @@ class AndorDetectorTestCase(MalcolmTestCase):
         self._camera.when_value_matches("arrayCounter", expected_num_frames, timeout=timeout)
         self.assert_array_counter_equals(expected_num_frames)
 
-    def assert_array_counter_equals(self, expected):
-        self.assertEqual(expected, self._camera.arrayCounter.value)
+    def assert_array_counter_equals(self, expected_value):
+        self.assertEqual(expected_value, self._camera.arrayCounter.value)
