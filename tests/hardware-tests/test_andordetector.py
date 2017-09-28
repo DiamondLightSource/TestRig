@@ -89,7 +89,7 @@ class AndorDetectorTestCase(MalcolmTestCase):
         self.assert_set_attribute_sets_attribute(image_mode, expected_readback_value, demand_value)
 
     def assert_acquires_number_of_frames_in_fixed_image_mode(self, expected_number_of_images, demand_number_of_images=None):
-        if demand_number_of_images is None:
+        if not demand_number_of_images:
             demand_number_of_images = expected_number_of_images
         self.assert_set_image_mode_sets_image_mode("Fixed")
         self.assert_set_num_images_sets_num_images(demand_number_of_images)
@@ -121,9 +121,9 @@ class AndorDetectorTestCase(MalcolmTestCase):
 
     def assert_set_attribute_sets_attribute(self, attribute, expected_readback_value, demand_value=None,
                                             attribute_to_read=None):
-        if demand_value is None:
+        if not demand_value:
             demand_value = expected_readback_value
-        if attribute_to_read is None:
+        if not attribute_to_read:
             attribute_to_read = attribute
         attribute.put_value(demand_value)
         self.assertAlmostEqual(expected_readback_value, attribute_to_read.value, 2)
