@@ -28,10 +28,10 @@ class AndorDetectorTestCase(MalcolmTestCase):
     def test_set_exposure_to_zero(self):
         self.assert_set_exposure_sets_exposure(0)
 
-    def test_set_exposure_to_positive(self):
+    def test_set_exposure_to_positive_value(self):
         self.assert_set_exposure_sets_exposure(1)
 
-    def test_set_exposure_to_negative(self):
+    def test_set_exposure_to_negative_value(self):
         self.assert_set_exposure_sets_exposure(0, -1)
 
     @unittest.skip("Skipping due to a known bug, Jira: http://jira.diamond.ac.uk/browse/P99-6")
@@ -39,7 +39,7 @@ class AndorDetectorTestCase(MalcolmTestCase):
         self.assert_set_exposure_sets_acquire_period(0.5, 0.5)
 
     @unittest.skip("Skipping due to a known bug, Jira: http://jira.diamond.ac.uk/browse/P99-6")
-    def test_acquire_period_does_not_follow_exposure_below_limit(self):
+    def test_acquire_period_does_not_follow_exposure_below_minimum_value(self):
         self.assert_set_exposure_sets_acquire_period(0.01, 0.009)
 
     @unittest.skip("Skipping due to a known bug, Jira: http://jira.diamond.ac.uk/browse/P99-6")
@@ -51,28 +51,28 @@ class AndorDetectorTestCase(MalcolmTestCase):
         self._camera.exposure.put_value(0.01)
         self.assert_set_acquire_period_sets_acquire_period(0.5)
 
-    def test_set_num_images_less_than_zero(self):
-        self.assert_set_num_images_sets_num_images(-1)
-
     def test_set_num_images_to_zero(self):
         self.assert_set_num_images_sets_num_images(0)
 
-    def test_set_num_images_to_more_than_zero(self):
+    def test_set_num_images_to_positive_value(self):
         self.assert_set_num_images_sets_num_images(1)
+
+    def test_set_num_images_to_negative_value(self):
+        self.assert_set_num_images_sets_num_images(-1)
 
     def test_acquire_zero_images(self):
         self.assert_set_num_images_sets_num_images(0)
         self.acquire_n_frames(1)
 
-    def test_acquire_negative_images(self):
+    def test_acquire_negative_number_of_images(self):
         self.assert_set_num_images_sets_num_images(-1)
         self.acquire_n_frames(1)
 
-    def test_acquire_one_image(self):
+    def test_acquire_single_image(self):
         self.assert_set_num_images_sets_num_images(1)
         self.acquire_n_frames(1)
 
-    def test_acquire_multiple_images(self):
+    def test_acquire_multiple_images_in_fixed_mode(self):
         self.assert_set_num_images_sets_num_images(2)
         self.acquire_n_frames(2)
 
@@ -111,7 +111,7 @@ class AndorDetectorTestCase(MalcolmTestCase):
 
     def assert_array_counter_reaches(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
         self._camera.when_value_matches("arrayCounter", expected_num_frames, timeout=timeout)
-        self.assert_array_counter(expected_num_frames)
+        self.assert_array_counter_equals(expected_num_frames)
 
-    def assert_array_counter(self, expected):
+    def assert_array_counter_equals(self, expected):
         self.assertEqual(expected, self._camera.arrayCounter.value)
