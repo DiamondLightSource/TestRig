@@ -60,6 +60,12 @@ class AndorDetectorTestCase(MalcolmTestCase):
     def test_set_num_images_to_negative_value(self):
         self.assert_set_num_images_sets_num_images(-1)
 
+    def test_cannot_set_image_mode_to_empty_string(self):
+        self.assert_set_image_mode_raises_malcolm_response_error("")
+
+    def test_cannot_set_image_mode_to_invalid_string(self):
+        self.assert_set_image_mode_raises_malcolm_response_error("a")
+
     def test_acquire_zero_images(self):
         self.assert_acquires_number_of_frames_in_fixed_image_mode(1, 0)
 
@@ -109,6 +115,18 @@ class AndorDetectorTestCase(MalcolmTestCase):
             attribute_to_read = attribute
         attribute.put_value(demand_value)
         self.assertAlmostEqual(expected_readback_value, attribute_to_read.value, 2)
+
+    def assert_set_image_mode_raises_malcolm_response_error(self, demand_value):
+        image_mode = self._camera.imageMode
+        self.assert_set_attribute_raises_malcolm_response_error(image_mode, demand_value)
+
+    def assert_set_attribute_raises_malcolm_response_error(self, attribute, demand_value):
+        from malcolm.core import ResponseError
+        self.assert_set_attribute_raises_error(attribute, ResponseError, demand_value)
+
+    def assert_set_attribute_raises_error(self, attribute, expected_error_type, demand_value):
+        with self.assertRaises(expected_error_type):
+            attribute.put_value(demand_value)
 
     def assert_array_counter_reaches(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
         self._camera.when_value_matches("arrayCounter", expected_num_frames, timeout=timeout)
