@@ -2,9 +2,8 @@ import unittest
 
 from malcolmtest import MalcolmTestCase, make_block_factory_from_connection
 
-TIMEOUT_A_FEW_FRAMES = 5
+DEFAULT_CAPTURE_TIMEOUT_SECONDS = 300
 ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
-
 
 class AndorDetectorTestCase(MalcolmTestCase):
     @classmethod
@@ -63,21 +62,21 @@ class AndorDetectorTestCase(MalcolmTestCase):
 
     def test_acquire_zero_images(self):
         self.assert_set_num_images_sets_num_images(0)
-        self.acquire_n_frames(1, TIMEOUT_A_FEW_FRAMES)
+        self.acquire_n_frames(1)
 
     def test_acquire_negative_images(self):
         self.assert_set_num_images_sets_num_images(-1)
-        self.acquire_n_frames(1, TIMEOUT_A_FEW_FRAMES)
+        self.acquire_n_frames(1)
 
     def test_acquire_one_image(self):
         self.assert_set_num_images_sets_num_images(1)
-        self.acquire_n_frames(1, TIMEOUT_A_FEW_FRAMES)
+        self.acquire_n_frames(1)
 
     def test_acquire_multiple_images(self):
         self.assert_set_num_images_sets_num_images(2)
-        self.acquire_n_frames(2, TIMEOUT_A_FEW_FRAMES)
+        self.acquire_n_frames(2)
 
-    def acquire_n_frames(self, expected_num_frames, timeout):
+    def acquire_n_frames(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
         self._camera.start()
         self.assert_array_counter_reaches(expected_num_frames, timeout)
         self._camera.stop()
@@ -110,7 +109,7 @@ class AndorDetectorTestCase(MalcolmTestCase):
         attribute.put_value(demand_value)
         self.assertAlmostEqual(expected_readback_value, attribute_to_read.value, 2)
 
-    def assert_array_counter_reaches(self, expected_num_frames, timeout):
+    def assert_array_counter_reaches(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
         self._camera.when_value_matches("arrayCounter", expected_num_frames, timeout=timeout)
         self.assert_array_counter(expected_num_frames)
 
