@@ -1,4 +1,5 @@
 import unittest
+
 from malcolm.core import Process, call_with_params
 from malcolm.yamlutil import make_include_creator
 

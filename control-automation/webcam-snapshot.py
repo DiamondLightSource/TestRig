@@ -1,15 +1,15 @@
 # Very temporary script here because the webcam is currently compatible with
 # Malcolm and we don't even know for sure if we're using Malcolm, will be replaced
 
-from pkg_resources import require
-
-require('cothread==2.14')
-
-from cothread import catools
-from time import sleep
 import urllib
 import sys
 import os
+
+from time import sleep
+from pkg_resources import require
+require('cothread==2.14')
+
+from cothread import catools
 
 SNAPSHOT_URL = "http://p99-control.diamond.ac.uk:8094/WEB1.mjpg.jpg"
 
