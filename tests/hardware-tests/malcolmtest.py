@@ -61,3 +61,12 @@ class MalcolmTestCase(unittest.TestCase):
 
     def setUp(self):
         self.restore_state()
+
+    def assert_set_attribute_sets_attribute(self, attribute, expected_readback_value, demand_value=None,
+                                            attribute_to_read=None):
+        if not demand_value:
+            demand_value = expected_readback_value
+        if not attribute_to_read:
+            attribute_to_read = attribute
+        attribute.put_value(demand_value)
+        self.assertAlmostEqual(expected_readback_value, attribute_to_read.value, 2)

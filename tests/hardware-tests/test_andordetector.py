@@ -25,14 +25,7 @@ class AndorDetectorTestCase(MalcolmTestCase):
         cls._camera.arrayCounter.put_value(0)
         cls._detector.design.put_value(ANDOR_DEFAULTS_SAVE)
 
-    def test_set_exposure_to_zero(self):
-        self.assert_set_exposure_sets_exposure(0)
 
-    def test_set_exposure_to_positive_value(self):
-        self.assert_set_exposure_sets_exposure(1)
-
-    def test_set_exposure_to_negative_value(self):
-        self.assert_set_exposure_sets_exposure(0, -1)
 
     @unittest.skip("Skipping due to a known bug, Jira: http://jira.diamond.ac.uk/browse/P99-6")
     def test_acquire_period_follows_exposure(self):
@@ -100,10 +93,6 @@ class AndorDetectorTestCase(MalcolmTestCase):
         self.assert_array_counter_reaches(expected_num_frames, timeout)
         self._camera.stop()
 
-    def assert_set_exposure_sets_exposure(self, expected_readback_value, demand_value=None):
-        exposure = self._camera.exposure
-        self.assert_set_attribute_sets_attribute(exposure, expected_readback_value, demand_value)
-
     def assert_set_exposure_sets_acquire_period(self, expected_acquire_period_readback_value,
                                                 exposure_demand_value):
         exposure = self._camera.exposure
@@ -118,15 +107,6 @@ class AndorDetectorTestCase(MalcolmTestCase):
     def assert_set_num_images_sets_num_images(self, expected_readback_value, demand_value=None):
         num_images = self._camera.numImages
         self.assert_set_attribute_sets_attribute(num_images, expected_readback_value, demand_value)
-
-    def assert_set_attribute_sets_attribute(self, attribute, expected_readback_value, demand_value=None,
-                                            attribute_to_read=None):
-        if not demand_value:
-            demand_value = expected_readback_value
-        if not attribute_to_read:
-            attribute_to_read = attribute
-        attribute.put_value(demand_value)
-        self.assertAlmostEqual(expected_readback_value, attribute_to_read.value, 2)
 
     def assert_set_image_mode_raises_malcolm_response_error(self, demand_value):
         image_mode = self._camera.imageMode
