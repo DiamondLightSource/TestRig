@@ -1,5 +1,6 @@
 from malcolmtest import MalcolmTestCase
 
+
 class TestExposure(MalcolmTestCase):
     def test_set_exposure_to_zero(self):
         self.assert_set_exposure_sets_exposure(0)
