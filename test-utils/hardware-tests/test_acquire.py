@@ -19,8 +19,8 @@ class TestAcquire(MalcolmTestCase):
                                                              demand_number_of_images=None):
         if not demand_number_of_images:
             demand_number_of_images = expected_number_of_images
-        self.assert_set_image_mode_sets_image_mode("Fixed")
-        self.assert_set_num_images_sets_num_images(demand_number_of_images) # Need to change these to use malcolm standard
+        self._camera.ImageMode.put_value("Fixed")
+        self._camera.NumImages.put_value(demand_number_of_images)
         self.assert_acquires_number_of_frames(expected_number_of_images)
 
     def assert_acquires_number_of_frames(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
