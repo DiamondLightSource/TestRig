@@ -1,5 +1,3 @@
-import unittest
-
 from malcolmtest import MalcolmTestCase, make_block_factory_from_connection
 
 ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
