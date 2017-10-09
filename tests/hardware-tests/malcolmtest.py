@@ -70,3 +70,11 @@ class MalcolmTestCase(unittest.TestCase):
             attribute_to_read = attribute
         attribute.put_value(demand_value)
         self.assertAlmostEqual(expected_readback_value, attribute_to_read.value, 2)
+
+    def assert_set_attribute_raises_malcolm_response_error(self, attribute, demand_value):
+        from malcolm.core import ResponseError
+        self.assert_set_attribute_raises_error(attribute, ResponseError, demand_value)
+
+    def assert_set_attribute_raises_error(self, attribute, expected_error_type, demand_value):
+        with self.assertRaises(expected_error_type):
+            attribute.put_value(demand_value)

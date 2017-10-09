@@ -5,6 +5,7 @@ from malcolmtest import MalcolmTestCase, make_block_factory_from_connection
 DEFAULT_CAPTURE_TIMEOUT_SECONDS = 300
 ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
 
+
 class AndorDetectorTestCase(MalcolmTestCase):
     @classmethod
     def set_up_blocks(cls):
@@ -25,27 +26,6 @@ class AndorDetectorTestCase(MalcolmTestCase):
         cls._camera.arrayCounter.put_value(0)
         cls._detector.design.put_value(ANDOR_DEFAULTS_SAVE)
 
-
-
-
-
-    def test_set_num_images_to_zero(self):
-        self.assert_set_num_images_sets_num_images(0)
-
-    def test_set_num_images_to_positive_value(self):
-        self.assert_set_num_images_sets_num_images(1)
-
-    def test_set_num_images_to_negative_value(self):
-        self.assert_set_num_images_sets_num_images(-1)
-
-    def test_cannot_set_image_mode_to_empty_string(self):
-        self.assert_set_image_mode_raises_malcolm_response_error("")
-
-    def test_cannot_set_image_mode_to_invalid_string(self):
-        self.assert_set_image_mode_raises_malcolm_response_error("a")
-
-
-
     def test_acquire_zero_images(self):
         self.assert_acquires_number_of_frames_in_fixed_image_mode(1, 0)
 
@@ -58,9 +38,8 @@ class AndorDetectorTestCase(MalcolmTestCase):
     def test_acquire_multiple_images_in_fixed_mode(self):
         self.assert_acquires_number_of_frames_in_fixed_image_mode(2)
 
-
-
-    def assert_acquires_number_of_frames_in_fixed_image_mode(self, expected_number_of_images, demand_number_of_images=None):
+    def assert_acquires_number_of_frames_in_fixed_image_mode(self, expected_number_of_images,
+                                                             demand_number_of_images=None):
         if not demand_number_of_images:
             demand_number_of_images = expected_number_of_images
         self.assert_set_image_mode_sets_image_mode("Fixed")
@@ -71,25 +50,6 @@ class AndorDetectorTestCase(MalcolmTestCase):
         self._camera.start()
         self.assert_array_counter_reaches(expected_num_frames, timeout)
         self._camera.stop()
-
-
-
-
-    def assert_set_num_images_sets_num_images(self, expected_readback_value, demand_value=None):
-        num_images = self._camera.numImages
-        self.assert_set_attribute_sets_attribute(num_images, expected_readback_value, demand_value)
-
-    def assert_set_image_mode_raises_malcolm_response_error(self, demand_value):
-        image_mode = self._camera.imageMode
-        self.assert_set_attribute_raises_malcolm_response_error(image_mode, demand_value)
-
-    def assert_set_attribute_raises_malcolm_response_error(self, attribute, demand_value):
-        from malcolm.core import ResponseError
-        self.assert_set_attribute_raises_error(attribute, ResponseError, demand_value)
-
-    def assert_set_attribute_raises_error(self, attribute, expected_error_type, demand_value):
-        with self.assertRaises(expected_error_type):
-            attribute.put_value(demand_value)
 
     def assert_array_counter_reaches(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
         self._camera.when_value_matches("arrayCounter", expected_num_frames, timeout=timeout)
