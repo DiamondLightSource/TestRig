@@ -44,11 +44,7 @@ class AndorDetectorTestCase(MalcolmTestCase):
     def test_cannot_set_image_mode_to_invalid_string(self):
         self.assert_set_image_mode_raises_malcolm_response_error("a")
 
-    def test_can_set_image_mode_to_fixed(self):
-        self.assert_set_image_mode_sets_image_mode("Fixed")
 
-    def test_can_set_image_mode_to_continuous(self):
-        self.assert_set_image_mode_sets_image_mode("Continuous")
 
     def test_acquire_zero_images(self):
         self.assert_acquires_number_of_frames_in_fixed_image_mode(1, 0)
@@ -62,9 +58,7 @@ class AndorDetectorTestCase(MalcolmTestCase):
     def test_acquire_multiple_images_in_fixed_mode(self):
         self.assert_acquires_number_of_frames_in_fixed_image_mode(2)
 
-    def assert_set_image_mode_sets_image_mode(self, expected_readback_value, demand_value=None):
-        image_mode = self._camera.imageMode
-        self.assert_set_attribute_sets_attribute(image_mode, expected_readback_value, demand_value)
+
 
     def assert_acquires_number_of_frames_in_fixed_image_mode(self, expected_number_of_images, demand_number_of_images=None):
         if not demand_number_of_images:
