@@ -8,7 +8,7 @@ from test_numimages import TestNumImages
 ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
 
 
-class AndorDetectorTestCase(TestAcquire, TestExposure, TestAcquirePeriod, TestImageMode,
+class AndorDetectorTestCase(MalcolmTestCase, TestAcquire, TestExposure, TestAcquirePeriod, TestImageMode,
                             TestNumImages):
     @classmethod
     def set_up_blocks(cls):

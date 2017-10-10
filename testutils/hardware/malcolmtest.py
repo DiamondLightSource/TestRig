@@ -33,7 +33,7 @@ class MalcolmBlockFactory:
         return self._process.block_view(block_mri)
 
 
-class MalcolmTestCase(unittest.TestCase):
+class MalcolmTestCase:
     _malcolm = None
 
     @classmethod
@@ -46,18 +46,6 @@ class MalcolmTestCase(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls._malcolm.close()
-
-    @classmethod
-    def set_up_blocks(cls):
-        pass
-
-    @classmethod
-    def save_state(cls):
-        pass
-
-    @classmethod
-    def restore_state(cls):
-        pass
 
     def setUp(self):
         self.restore_state()
