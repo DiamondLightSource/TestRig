@@ -1,0 +1,87 @@
+{
+  "layout": {
+    "POS": {
+      "x": 0.0, 
+      "y": 0.0, 
+      "visible": false
+    }, 
+    "HDF5": {
+      "x": 0.0, 
+      "y": 0.0, 
+      "visible": true
+    }, 
+    "DRV": {
+      "x": 0.0, 
+      "y": 0.0, 
+      "visible": true
+    }, 
+    "STAT": {
+      "x": 0.0, 
+      "y": 0.0, 
+      "visible": true
+    }
+  }, 
+  "exports": {}, 
+  "DRV": {
+    "arrayCallbacks": true, 
+    "attributesFile": "", 
+    "imageMode": "Fixed", 
+    "numImages": 0, 
+    "triggerMode": "Internal", 
+    "exposure": 0.009999314285714286, 
+    "acquirePeriod": 0.010627200000000002
+  }, 
+  "HDF5": {
+    "arrayCallbacks": false, 
+    "attributesFile": "", 
+    "inp": "DET1.cam", 
+    "enableCallbacks": true, 
+    "fileWriteMode": "Stream", 
+    "swmrMode": true, 
+    "positionMode": false, 
+    "dimAttDatasets": false, 
+    "lazyOpen": false, 
+    "numCapture": 10000, 
+    "flushDataPerNFrames": 1, 
+    "flushAttrPerNFrames": 1, 
+    "xml": "", 
+    "filePath": "/dls/p99/data/2017/cm19489-1/", 
+    "fileName": "danishpastry", 
+    "fileTemplate": "%s/%s.h5", 
+    "numExtraDims": 0, 
+    "posNameDimN": "", 
+    "posNameDimX": "", 
+    "posNameDimY": "", 
+    "posNameDim3": "", 
+    "posNameDim4": "", 
+    "posNameDim5": "", 
+    "posNameDim6": "", 
+    "posNameDim7": "", 
+    "posNameDim8": "", 
+    "posNameDim9": "", 
+    "extraDimSizeN": 1, 
+    "extraDimSizeX": 1, 
+    "extraDimSizeY": 1, 
+    "extraDimSize3": 1, 
+    "extraDimSize4": 1, 
+    "extraDimSize5": 1, 
+    "extraDimSize6": 1, 
+    "extraDimSize7": 1, 
+    "extraDimSize8": 1, 
+    "extraDimSize9": 1
+  }, 
+  "POS": {
+    "arrayCallbacks": false, 
+    "attributesFile": "", 
+    "inp": "", 
+    "enableCallbacks": false, 
+    "idStart": 1
+  }, 
+  "STAT": {
+    "arrayCallbacks": true, 
+    "attributesFile": "BL99P-EA-IOC-01App/data/DET1.stat.xml", 
+    "inp": "DET1.cam", 
+    "enableCallbacks": true, 
+    "computeStatistics": true
+  }
+}
