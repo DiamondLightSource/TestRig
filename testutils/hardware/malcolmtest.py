@@ -34,20 +34,25 @@ class MalcolmBlockFactory:
 
 
 class MalcolmTestCase:
-    _malcolm = None
+    _process = None
 
     @classmethod
     def setUpClass(cls):
-        cls._malcolm = MalcolmConnection("Test Case")
-        cls._malcolm.open()
-        cls.set_up_blocks()
-        cls.save_state()
+        cls._process = Process("Test Case")
+        cls._process.start()
+        yaml_path = cls.get_yaml_path()
+        call_with_params(make_include_creator(yaml_path), cls._process)
 
     @classmethod
     def tearDownClass(cls):
-        cls._malcolm.close()
+        cls._process.stop()
+
+    @classmethod
+    def get_yaml_path(cls):
+        pass
 
     def setUp(self):
+        self.setup_blocks(self._process)
         self.restore_state()
 
     def assert_set_attribute_sets_attribute(self, attribute, expected_readback_value, demand_value=None,

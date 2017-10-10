@@ -5,6 +5,10 @@ from testutils.hardware.areadetector.test_andordetector import AndorDetectorTest
 from testutils.hardware.malcolmtest import MalcolmTestCase
 
 class TestBl99PEaDet01(AndorDetectorTestCase, TestCase):
+    @classmethod
+    def get_yaml_path(cls):
+        return "config/hardware-control-config/bl99p-ea-det-01.yaml"
+
     @pytest.mark.skip("Skipping due to a known bug, Jira: http://jira.diamond.ac.uk/browse/P99-6")
     def test_acquire_period_follows_exposure(self):
         pass
