@@ -1,9 +1,7 @@
 from _pytest import unittest
 
-from malcolmtest import MalcolmTestCase
 
-
-class TestAcquirePeriod(MalcolmTestCase):
+class TestAcquirePeriod:
     @unittest.skip("Skipping due to a known bug, Jira: http://jira.diamond.ac.uk/browse/P99-6")
     def test_acquire_period_follows_exposure(self):
         self.assert_set_exposure_sets_acquire_period(0.5, 0.5)

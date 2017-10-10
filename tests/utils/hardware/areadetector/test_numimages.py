@@ -1,7 +1,4 @@
-from malcolmtest import MalcolmTestCase
-
-
-class TestNumImages(MalcolmTestCase):
+class TestNumImages:
     def test_set_num_images_to_zero(self):
         self.assert_set_num_images_sets_num_images(0)
 

@@ -1,7 +1,4 @@
-from malcolmtest import MalcolmTestCase
-
-
-class TestImageMode(MalcolmTestCase):
+class TestImageMode:
     def test_cannot_set_image_mode_to_empty_string(self):
         self.assert_set_image_mode_raises_malcolm_response_error("")
 
