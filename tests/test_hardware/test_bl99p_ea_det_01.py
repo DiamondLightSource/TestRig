@@ -4,7 +4,7 @@ from unittest import TestCase
 from testutils.hardware.areadetector.test_andordetector import AndorDetectorTestCase
 from testutils.hardware.malcolmtest import MalcolmTestCase
 
-class TestBl99PEaDet01(MalcolmTestCase, AndorDetectorTestCase):
+class TestBl99PEaDet01(AndorDetectorTestCase, MalcolmTestCase):
     @pytest.mark.skip("Skipping due to a known bug, Jira: http://jira.diamond.ac.uk/browse/P99-6")
     def test_acquire_period_follows_exposure(self):
         pass

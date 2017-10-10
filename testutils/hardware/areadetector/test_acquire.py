@@ -17,8 +17,8 @@ class TestAcquire:
                                                              demand_number_of_images=None):
         if not demand_number_of_images:
             demand_number_of_images = expected_number_of_images
-        self._camera.ImageMode.put_value("Fixed")
-        self._camera.NumImages.put_value(demand_number_of_images)
+        self._camera.imageMode.put_value("Fixed")
+        self._camera.numImages.put_value(demand_number_of_images)
         self.assert_acquires_number_of_frames(expected_number_of_images)
 
     def assert_acquires_number_of_frames(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
