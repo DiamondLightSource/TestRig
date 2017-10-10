@@ -1,4 +1,4 @@
-from utils.hardware.malcolmtest import MalcolmTestCase, make_block_factory_from_connection
+from testutils.hardware.malcolmtest import MalcolmTestCase, make_block_factory_from_connection
 from test_acquire import TestAcquire
 from test_exposure import TestExposure
 from test_acquireperiod import TestAcquirePeriod
