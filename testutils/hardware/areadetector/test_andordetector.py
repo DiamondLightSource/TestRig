@@ -1,4 +1,4 @@
-from testutils.hardware.malcolmtest import MalcolmTestCase, make_block_factory_from_connection
+from testutils.hardware.malcolmtest import MalcolmTestCase, MalcolmDeviceTestCase
 from test_acquire import TestAcquire
 from test_exposure import TestExposure
 from test_acquireperiod import TestAcquirePeriod
@@ -8,7 +8,7 @@ from test_numimages import TestNumImages
 ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
 
 
-class AndorDetectorTestCase(MalcolmTestCase, TestAcquire, TestExposure, TestAcquirePeriod, TestImageMode,
+class AndorDetectorTestCase(MalcolmTestCase, MalcolmDeviceTestCase, TestAcquire, TestExposure, TestAcquirePeriod, TestImageMode,
                             TestNumImages):
     def setup_blocks(self, block_viewer):
         self._detector = block_viewer.block_view("ANDOR")
@@ -23,5 +23,3 @@ class AndorDetectorTestCase(MalcolmTestCase, TestAcquire, TestExposure, TestAcqu
         # Jira: http://jira.diamond.ac.uk/browse/BC-505
         self._camera.arrayCounter.put_value(0)
         self._detector.design.put_value(ANDOR_DEFAULTS_SAVE)
-
-
