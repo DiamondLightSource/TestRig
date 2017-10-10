@@ -1,9 +1,15 @@
 from utils.hardware.malcolmtest import MalcolmTestCase, make_block_factory_from_connection
+from test_acquire import TestAcquire
+from test_exposure import TestExposure
+from test_acquireperiod import TestAcquirePeriod
+from test_imagemode import TestImageMode
+from test_numimages import TestNumImages
 
 ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
 
 
-class AndorDetectorTestCase(MalcolmTestCase):
+class AndorDetectorTestCase(MalcolmTestCase, TestAcquire, TestExposure, TestAcquirePeriod, TestImageMode,
+                            TestNumImages):
     @classmethod
     def set_up_blocks(cls):
         block_factory = make_block_factory_from_connection(cls._malcolm)
