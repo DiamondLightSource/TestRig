@@ -28,8 +28,8 @@
     "imageMode": "Fixed", 
     "numImages": 0, 
     "triggerMode": "Internal", 
-    "exposure": 0.009999314285714286, 
-    "acquirePeriod": 0.010627200000000002
+    "exposure": 0.001,
+    "acquirePeriod": 0.01
   }, 
   "HDF5": {
     "arrayCallbacks": false, 
@@ -45,9 +45,9 @@
     "flushDataPerNFrames": 1, 
     "flushAttrPerNFrames": 1, 
     "xml": "", 
-    "filePath": "/dls/p99/data/2017/cm19489-1/", 
-    "fileName": "danishpastry", 
-    "fileTemplate": "%s/%s.h5", 
+    "filePath": "",
+    "fileName": "",
+    "fileTemplate": "%s/%s_%i.h5",
     "numExtraDims": 0, 
     "posNameDimN": "", 
     "posNameDimX": "", 
