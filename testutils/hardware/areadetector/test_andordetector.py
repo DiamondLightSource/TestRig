@@ -5,12 +5,13 @@ from testutils.hardware.areadetector.test_acquireperiod import TestAcquirePeriod
 from testutils.hardware.areadetector.test_imagemode import TestImageMode
 from testutils.hardware.areadetector.test_numimages import TestNumImages
 from testutils.hardware.areadetector.test_triggermode import TestTriggerMode
+from testutils.hardware.areadetector.test_acquirereadout import TestAcquireReadout
 
 ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
 
 
-class AndorDetectorProcessTestCase(ProcessTestCase, DeviceTestCase, TestImageAcquire, TestExposure, TestAcquirePeriod, TestImageMode,
-                                   TestTriggerMode, TestNumImages):
+class AndorDetectorProcessTestCase(ProcessTestCase, DeviceTestCase, TestExposure, TestAcquirePeriod, TestImageMode,
+                                   TestTriggerMode, TestNumImages, TestAcquireReadout, TestImageAcquire):
     def setup_blocks(self, block_viewer):
         self._detector = block_viewer.block_view("ANDOR")
         self._camera = block_viewer.block_view("ANDOR:DRV")
