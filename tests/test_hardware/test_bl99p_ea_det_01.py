@@ -1,10 +1,10 @@
 import pytest
 
 from unittest import TestCase
-from testutils.hardware.areadetector.test_andordetector import AndorDetectorTestCase
-from testutils.hardware.malcolmtest import MalcolmTestCase
+from testutils.hardware.areadetector.test_andordetector import AndorDetectorProcessTestCase
+from testutils.hardware.malcolmtest import ProcessTestCase
 
-class TestBl99PEaDet01(AndorDetectorTestCase, TestCase):
+class TestBl99PEaDet01(AndorDetectorProcessTestCase, TestCase):
     @classmethod
     def get_yaml_path(cls):
         return "config/hardware-control-config/bl99p-ea-det-01.yaml"

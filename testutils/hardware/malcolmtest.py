@@ -4,10 +4,7 @@ from malcolm.core import Process, call_with_params
 from malcolm.yamlutil import make_include_creator
 
 
-def make_block_factory_from_connection(malcolm_connection):
-    return MalcolmBlockFactory(malcolm_connection.get_process())
-
-class MalcolmDeviceTestCase:
+class DeviceTestCase:
     def assert_set_attribute_sets_attribute(self, attribute, expected_readback_value, demand_value=None,
                                             attribute_to_read=None):
         if not demand_value:
@@ -26,7 +23,7 @@ class MalcolmDeviceTestCase:
             attribute.put_value(demand_value)
 
 
-class MalcolmTestCase:
+class ProcessTestCase:
     _process = None
 
     @classmethod
