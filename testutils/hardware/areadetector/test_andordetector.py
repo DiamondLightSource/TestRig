@@ -1,5 +1,5 @@
 from testutils.hardware.malcolmtest import ProcessTestCase, DeviceTestCase
-from testutils.hardware.areadetector.test_imagecapture import TestImageCapture
+from testutils.hardware.areadetector.test_imageacquire import TestImageAcquire
 from testutils.hardware.areadetector.test_exposure import TestExposure
 from testutils.hardware.areadetector.test_acquireperiod import TestAcquirePeriod
 from testutils.hardware.areadetector.test_imagemode import TestImageMode
@@ -9,7 +9,7 @@ from testutils.hardware.areadetector.test_triggermode import TestTriggerMode
 ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
 
 
-class AndorDetectorProcessTestCase(ProcessTestCase, DeviceTestCase, TestImageCapture, TestExposure, TestAcquirePeriod, TestImageMode,
+class AndorDetectorProcessTestCase(ProcessTestCase, DeviceTestCase, TestImageAcquire, TestExposure, TestAcquirePeriod, TestImageMode,
                                    TestTriggerMode, TestNumImages):
     def setup_blocks(self, block_viewer):
         self._detector = block_viewer.block_view("ANDOR")
