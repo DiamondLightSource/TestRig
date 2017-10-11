@@ -1,6 +1,6 @@
 DEFAULT_CAPTURE_TIMEOUT_SECONDS = 300
 
-class TestAcquire:
+class TestImageCapture:
     def test_acquire_zero_images(self):
         self.assert_acquires_number_of_frames_in_fixed_image_mode(1, 0)
 
