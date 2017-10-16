@@ -1,4 +1,18 @@
 class TestImageAcquire:
+    def assert_acquires_number_of_frames(self, expected_number_of_frames):
+        expected_time_to_take_frames = self.estimate_time_to_take_frames(expected_number_of_frames)
+        self._camera.start(timeout=expected_time_to_take_frames * 2)
+        self._camera.stop()
+        self.assert_array_counter_equals(expected_number_of_frames)
+
+    def estimate_time_to_take_frames(self, expected_number_of_frames):
+        acquire_period = self._camera.acquirePeriod.value
+        return acquire_period * expected_number_of_frames
+
+    def assert_array_counter_equals(self, expected_value):
+        self.assertEqual(expected_value, self._camera.arrayCounterReadback.value)
+
+class TestFixedImageAcquire(TestImageAcquire):
     def test_acquire_zero_images(self):
         self.assert_acquires_number_of_frames_in_fixed_image_mode(1, 0)
 
@@ -19,15 +33,9 @@ class TestImageAcquire:
         self._camera.numImages.put_value(demand_number_of_images)
         self.assert_acquires_number_of_frames(expected_number_of_images)
 
-    def assert_acquires_number_of_frames(self, expected_number_of_frames):
-        expected_time_to_take_frames = self.estimate_time_to_take_frames(expected_number_of_frames)
-        self._camera.start(timeout=expected_time_to_take_frames * 2)
-        self._camera.stop()
-        self.assert_array_counter_equals(expected_number_of_frames)
-
-    def estimate_time_to_take_frames(self, expected_number_of_frames):
-        acquire_period = self._camera.acquirePeriod.value
-        return acquire_period * expected_number_of_frames
-
-    def assert_array_counter_equals(self, expected_value):
-        self.assertEqual(expected_value, self._camera.arrayCounterReadback.value)
+class TestContinuousImageAcquire(TestImageAcquire):
+    #def test_continuous_acquisition_does_not_crash_at_low_exposure_for_low_frames(self):
+    #    self._camera.exposure.put_value(0.001)
+    #    self._camera.imageMode.put_value("Continuous")
+    #    self.assert_acquires_number_of_frames(100)
+    pass
