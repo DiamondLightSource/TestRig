@@ -1,5 +1,3 @@
-DEFAULT_CAPTURE_TIMEOUT_SECONDS = 10
-
 class TestImageAcquire:
     def test_acquire_zero_images(self):
         self.assert_acquires_number_of_frames_in_fixed_image_mode(1, 0)
@@ -21,7 +19,7 @@ class TestImageAcquire:
         self._camera.numImages.put_value(demand_number_of_images)
         self.assert_acquires_number_of_frames(expected_number_of_images)
 
-    def assert_acquires_number_of_frames(self, expected_number_of_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
+    def assert_acquires_number_of_frames(self, expected_number_of_frames):
         acquire_period = self._camera.acquirePeriod.value
         expected_time_to_take_frames = acquire_period * expected_number_of_frames
 
