@@ -1,4 +1,4 @@
-DEFAULT_CAPTURE_TIMEOUT_SECONDS = 300
+DEFAULT_CAPTURE_TIMEOUT_SECONDS = 10
 
 class TestImageAcquire:
     def test_acquire_zero_images(self):
@@ -22,13 +22,17 @@ class TestImageAcquire:
         self.assert_acquires_number_of_frames(expected_number_of_images)
 
     def assert_acquires_number_of_frames(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
-        self._camera.start()
-        self.assert_array_counter_reaches(expected_num_frames, timeout)
+        acquire_period = self._camera.acquirePeriod.value
+        expected_time_to_take_frames = acquire_period * expected_num_frames
+
+        self._camera.start(timeout=expected_time_to_take_frames * 2)
         self._camera.stop()
+        self.assert_array_counter_equals(expected_num_frames)
+        #self.assert_array_counter_reaches(expected_num_frames, timeout)
 
     def assert_array_counter_reaches(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
-        self._camera.when_value_matches("arrayCounter", expected_num_frames, timeout=timeout)
+        self._camera.when_value_matches("arrayCounterReadback", expected_num_frames, timeout=timeout)
         self.assert_array_counter_equals(expected_num_frames)
 
     def assert_array_counter_equals(self, expected_value):
-        self.assertEqual(expected_value, self._camera.arrayCounter.value)
+        self.assertEqual(expected_value, self._camera.arrayCounterReadback.value)
