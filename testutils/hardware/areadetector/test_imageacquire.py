@@ -21,13 +21,13 @@ class TestImageAcquire:
         self._camera.numImages.put_value(demand_number_of_images)
         self.assert_acquires_number_of_frames(expected_number_of_images)
 
-    def assert_acquires_number_of_frames(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
+    def assert_acquires_number_of_frames(self, expected_number_of_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
         acquire_period = self._camera.acquirePeriod.value
-        expected_time_to_take_frames = acquire_period * expected_num_frames
+        expected_time_to_take_frames = acquire_period * expected_number_of_frames
 
         self._camera.start(timeout=expected_time_to_take_frames * 2)
         self._camera.stop()
-        self.assert_array_counter_equals(expected_num_frames)
+        self.assert_array_counter_equals(expected_number_of_frames)
 
     def assert_array_counter_equals(self, expected_value):
         self.assertEqual(expected_value, self._camera.arrayCounterReadback.value)
