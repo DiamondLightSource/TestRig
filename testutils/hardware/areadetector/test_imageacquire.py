@@ -28,11 +28,6 @@ class TestImageAcquire:
         self._camera.start(timeout=expected_time_to_take_frames * 2)
         self._camera.stop()
         self.assert_array_counter_equals(expected_num_frames)
-        #self.assert_array_counter_reaches(expected_num_frames, timeout)
-
-    def assert_array_counter_reaches(self, expected_num_frames, timeout=DEFAULT_CAPTURE_TIMEOUT_SECONDS):
-        self._camera.when_value_matches("arrayCounterReadback", expected_num_frames, timeout=timeout)
-        self.assert_array_counter_equals(expected_num_frames)
 
     def assert_array_counter_equals(self, expected_value):
         self.assertEqual(expected_value, self._camera.arrayCounterReadback.value)
