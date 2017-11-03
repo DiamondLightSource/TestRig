@@ -1,0 +1,6 @@
+# You should have the environment variable ANDOR_SDK_ROOT set to the directory
+# where the SDK is installed, usually /usr or /usr/local
+
+export LIBRARY_PATH="$LIBRARY_PATH:$ANDOR_SDK_ROOT/lib"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ANDOR_SDK_ROOT/lib"
+export CPATH="$CPATH:$SUPPORT/include"
