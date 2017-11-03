@@ -32,10 +32,3 @@ class TestFixedImageAcquire(TestImageAcquire):
         self._camera.imageMode.put_value("Fixed")
         self._camera.numImages.put_value(demand_number_of_images)
         self.assert_acquires_number_of_frames(expected_number_of_images)
-
-class TestContinuousImageAcquire(TestImageAcquire):
-    #def test_continuous_acquisition_does_not_crash_at_low_exposure_for_low_frames(self):
-    #    self._camera.exposure.put_value(0.001)
-    #    self._camera.imageMode.put_value("Continuous")
-    #    self.assert_acquires_number_of_frames(100)
-    pass
