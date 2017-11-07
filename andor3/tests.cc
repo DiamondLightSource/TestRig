@@ -7,7 +7,7 @@
 const int DETECTOR_ADDRESS = 0;
 const char* ANDOR_DETECTOR_MODEL = "DC-152Q-C00-FI";
 
-void handleAndorResultCode(int andor_result_code) {
+inline void handleAndorResultCode(int andor_result_code) {
     EXPECT_EQ(0, andor_result_code);
 }
 
