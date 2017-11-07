@@ -35,7 +35,7 @@ find_library(
 
 
 set(SOURCE_FILES
-        main.cpp)
+        andor3/tests.cc)
 
 include_directories(${ANDOR_INC} ${gtest_SOURCE_DIR}/include)
 add_executable(DriverTests ${SOURCE_FILES})
