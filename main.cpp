@@ -24,7 +24,7 @@ int test_is_device_plugged_in() {
         char szCamModel[128];
         wcstombs(szCamModel, CameraModel, 64);
         std::cout << szCamModel << std::endl;
-        EXPECT_EQ("DC-152Q-C00-FI", szCamModel);
+        EXPECT_STREQ("DC-152Q-C00-FI", szCamModel);
     }
 
     iErr = AT_Close(Hndl);
