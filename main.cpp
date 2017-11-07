@@ -5,8 +5,9 @@
 #include "gtest/gtest.h"
 
 const int DETECTOR_ADDRESS = 0;
+const char* ANDOR_DETECTOR_MODEL = "DC-152Q-C00-FI";
 
-int test_is_device_plugged_in() {
+TEST(ANDOR, DEVICE_PRESENT) {
     int iErr = AT_InitialiseLibrary();
     if (iErr != AT_SUCCESS) {
         std::cout << "Error from AT_Initialise : " << iErr << std::endl;
@@ -23,8 +24,7 @@ int test_is_device_plugged_in() {
     if (iErr == AT_SUCCESS) {
         char szCamModel[128];
         wcstombs(szCamModel, CameraModel, 64);
-        std::cout << szCamModel << std::endl;
-        EXPECT_STREQ("DC-152Q-C00-FI", szCamModel);
+        EXPECT_STREQ(ANDOR_DETECTOR_MODEL, szCamModel);
     }
 
     iErr = AT_Close(Hndl);
@@ -33,9 +33,4 @@ int test_is_device_plugged_in() {
     }
 
     AT_FinaliseLibrary();
-}
-
-int main() {
-    test_is_device_plugged_in();
-    return 0;
 }
