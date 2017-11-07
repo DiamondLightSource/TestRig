@@ -1,7 +1,8 @@
+#include <limits.h>
 #include <stdlib.h>
 #include <iostream>
 #include "atcore.h"
-#include "gtestutils.h"
+#include "gtest/gtest.h"
 
 const int DETECTOR_ADDRESS = 0;
 
