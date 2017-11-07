@@ -7,7 +7,7 @@
 const int DETECTOR_ADDRESS = 0;
 const char* ANDOR_DETECTOR_MODEL = "DC-152Q-C00-FI";
 
-TEST(ANDOR, DEVICE_PRESENT) {
+TEST(Andor, DevicePresent) {
     int iErr = AT_InitialiseLibrary();
     if (iErr != AT_SUCCESS) {
         std::cout << "Error from AT_Initialise : " << iErr << std::endl;
@@ -33,4 +33,8 @@ TEST(ANDOR, DEVICE_PRESENT) {
     }
 
     AT_FinaliseLibrary();
+}
+
+TEST(Andor, CanSetExposure) {
+    
 }
