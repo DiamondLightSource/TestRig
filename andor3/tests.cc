@@ -17,10 +17,10 @@ void InitializeAndorSdk() {
 }
 
 AT_H& OpenCameraConnection() {
-    AT_H Hndl  = AT_HANDLE_UNINITIALISED;
-    int andor_result_code = AT_Open(DETECTOR_ADDRESS, &Hndl);
+    AT_H handle  = AT_HANDLE_UNINITIALISED;
+    int andor_result_code = AT_Open(DETECTOR_ADDRESS, &handle);
     HandleAndorResultCode(andor_result_code);
-    return Hndl;
+    return handle;
 }
 
 AT_H& ConnectToCamera() {
