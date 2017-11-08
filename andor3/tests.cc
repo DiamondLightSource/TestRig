@@ -7,40 +7,40 @@
 const int DETECTOR_ADDRESS = 0;
 const char* ANDOR_DETECTOR_MODEL = "DC-152Q-C00-FI";
 
-inline void handleAndorResultCode(int andor_result_code) {
+inline void HandleAndorResultCode(int andor_result_code) {
     EXPECT_EQ(0, andor_result_code);
 }
 
-void initializeAndorSdk() {
+void InitializeAndorSdk() {
     int andor_result_code = AT_InitialiseLibrary();
-    handleAndorResultCode(andor_result_code);
+    HandleAndorResultCode(andor_result_code);
 }
 
-AT_H& openCameraConnection() {
+AT_H& OpenCameraConnection() {
     AT_H Hndl  = AT_HANDLE_UNINITIALISED;
     int andor_result_code = AT_Open(DETECTOR_ADDRESS, &Hndl);
-    handleAndorResultCode(andor_result_code);
+    HandleAndorResultCode(andor_result_code);
     return Hndl;
 }
 
 AT_H& ConnectToCamera() {
-    initializeAndorSdk();
-    return openCameraConnection();
+    InitializeAndorSdk();
+    return OpenCameraConnection();
 }
 
-void closeCameraConnection(AT_H& camera_handle) {
+void CloseCameraConnection(AT_H &camera_handle) {
     int andor_result_code = AT_Close(camera_handle);
-    handleAndorResultCode(andor_result_code);
+    HandleAndorResultCode(andor_result_code);
 }
 
-void cleanUpAndorSdk() {
+void CleanUpAndorSdk() {
     int andor_result_code = AT_FinaliseLibrary();
-    handleAndorResultCode(andor_result_code);
+    HandleAndorResultCode(andor_result_code);
 }
 
 void DisconnectFromCamera(AT_H& camera_handle) {
-    closeCameraConnection(camera_handle);
-    cleanUpAndorSdk();
+    CloseCameraConnection(camera_handle);
+    CleanUpAndorSdk();
 }
 
 TEST(Andor, DevicePresent) {
@@ -61,11 +61,11 @@ TEST(Andor, CanSetExposure) {
     AT_H camera_handle = ConnectToCamera();
 
     int andor_result_code = AT_SetFloat (camera_handle,  L"ExposureTime", 0.01);
-    handleAndorResultCode(andor_result_code);
+    HandleAndorResultCode(andor_result_code);
 
     double exposure_time;
     andor_result_code = AT_GetFloat(camera_handle, L"ExposureTime", &exposure_time);
-    handleAndorResultCode(andor_result_code);
+    HandleAndorResultCode(andor_result_code);
 
     EXPECT_NEAR(0.01, exposure_time, 0.001);
 
