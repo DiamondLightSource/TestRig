@@ -33,8 +33,9 @@ TEST_F(AndorDriverTest, DevicePresent) {
 TEST_F(AndorDriverTest, CanSetExposure) {
     AT_H camera_handle = connection_->ConnectionHandle();
 
-    AT_SetFloat (camera_handle,  L"ExposureTime", 0.01);
+    double target_exporsure_time = 0.01;
+    AT_SetFloat (camera_handle, L"ExposureTime", target_exporsure_time);
     double exposure_time;
     AT_GetFloat(camera_handle, L"ExposureTime", &exposure_time);
-    EXPECT_NEAR(0.01, exposure_time, 0.001);
+    EXPECT_NEAR(target_exporsure_time, exposure_time, 0.001);
 }

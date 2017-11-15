@@ -42,7 +42,6 @@ void Connection::FinalizeAndorSdk() {
 inline void Connection::HandleAndorResultCode(int andor_result_code) {
     if(andor_result_code)
         throw andor_result_code;
-        //std::cout << "Andor SDK error " << andor_result_code << std::endl;
 }
 
 AT_H& Connection::ConnectionHandle() {
