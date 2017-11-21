@@ -1,8 +1,9 @@
+from unittest import TestCase
+
 import pytest
 
-from unittest import TestCase
-from testutils.hardware.areadetector.test_andordetector import AndorDetectorProcessTestCase
-from testutils.hardware.malcolmtest import ProcessTestCase
+from testutils.malcolm.test_andordetector import AndorDetectorProcessTestCase
+
 
 class TestBl99PEaDet01(AndorDetectorProcessTestCase, TestCase):
     @classmethod

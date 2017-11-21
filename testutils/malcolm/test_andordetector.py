@@ -1,11 +1,12 @@
-from testutils.hardware.malcolmtest import ProcessTestCase, DeviceTestCase
-from testutils.hardware.areadetector.test_imageacquire import TestFixedImageAcquire
-from testutils.hardware.areadetector.test_exposure import TestExposure
 from testutils.hardware.areadetector.test_acquireperiod import TestAcquirePeriod
-from testutils.hardware.areadetector.test_imagemode import TestImageMode
-from testutils.hardware.areadetector.test_numimages import TestNumImages
-from testutils.hardware.areadetector.test_triggermode import TestTriggerMode
 from testutils.hardware.areadetector.test_acquirereadout import TestAcquireReadout
+from testutils.hardware.areadetector.test_exposure import TestExposure
+from testutils.hardware.areadetector.test_imageacquire import TestFixedImageAcquire
+from testutils.hardware.areadetector.test_imagemode import TestImageMode
+from testutils.hardware.areadetector.test_triggermode import TestTriggerMode
+
+from testutils.hardware.malcolmtest import ProcessTestCase, DeviceTestCase
+from testutils.malcolm.test_numimages import TestNumImages
 
 ANDOR_DEFAULTS_SAVE = "ANDOR-DEFAULTS"
 
