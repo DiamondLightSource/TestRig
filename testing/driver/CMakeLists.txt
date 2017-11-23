@@ -33,10 +33,10 @@ find_library(
         ANDOR_LIB
         NAMES "atcore")
 
-
 set(SOURCE_FILES
-        andor3/connection.cpp)
+        tests/andor3.cc
+        utilities/andor3/connection.cpp)
 
-include_directories(${ANDOR_INC} ${gtest_SOURCE_DIR}/include)
+include_directories(${ANDOR_INC} ${gtest_SOURCE_DIR}/include utilities)
 add_executable(DriverTests ${SOURCE_FILES})
 target_link_libraries(DriverTests gtest_main ${ANDOR_LIB})
