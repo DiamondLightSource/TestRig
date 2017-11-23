@@ -35,8 +35,7 @@ find_library(
 
 
 set(SOURCE_FILES
-        andor3/tests.cc
-        andor3/connection.cpp andor3/andorexception.cpp andor3/andorexception.hpp)
+        andor3/connection.cpp)
 
 include_directories(${ANDOR_INC} ${gtest_SOURCE_DIR}/include)
 add_executable(DriverTests ${SOURCE_FILES})

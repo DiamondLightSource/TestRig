@@ -102,3 +102,6 @@ ENV/
 
 # jetbrains
 .idea/
+
+# CMake build dirs
+cmake-build-*

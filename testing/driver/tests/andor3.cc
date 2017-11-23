@@ -1,4 +1,4 @@
-#include "connection.hpp"
+#include "andor3/connection.hpp"
 #include "gtest/gtest.h"
 
 const int DETECTOR_ADDRESS = 0;
