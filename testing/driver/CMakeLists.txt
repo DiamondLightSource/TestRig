@@ -35,7 +35,7 @@ find_library(
 
 set(SOURCE_FILES
         tests/andor3.cc
-        utilities/andor3/connection.cpp)
+        utilities/andor3/connection.cpp utilities/andor3/camera.cpp utilities/andor3/camera.hpp)
 
 include_directories(${ANDOR_INC} ${gtest_SOURCE_DIR}/include utilities)
 add_executable(DriverTests ${SOURCE_FILES})

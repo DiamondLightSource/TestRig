@@ -8,7 +8,7 @@ const char* ANDOR_DETECTOR_MODEL = "DC-152Q-C00-FI";
 class AndorDriverTest : public testing::Test {
 protected:
     virtual void SetUp() {
-        connection_ = new Connection(DETECTOR_ADDRESS);
+        connection_ = new andor3::Connection(DETECTOR_ADDRESS);
         connection_->Open();
     }
 
@@ -17,14 +17,14 @@ protected:
         delete(connection_);
     }
 
-    Connection* connection_;
+    andor3::Connection* connection_;
 };
 
 TEST_F(AndorDriverTest, DevicePresent) {
     AT_H camera_handle = connection_->ConnectionHandle();
 
     AT_WC CameraModel[128];
-    AT_GetString(camera_handle, L"Camera Model", CameraModel, 128);
+    AT_GetString(camera_handle, L"camera Model", CameraModel, 128);
     char szCamModel[128];
     wcstombs(szCamModel, CameraModel, 64);
     EXPECT_STREQ(ANDOR_DETECTOR_MODEL, szCamModel);
