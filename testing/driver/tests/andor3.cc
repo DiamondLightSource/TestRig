@@ -72,5 +72,5 @@ protected:
 
 TEST_F(AndorDriverTest, DevicePresent) {
     std::string camera_model = GetCameraModel(*camera_handle);
-    ASSERT_STREQ(ANDOR_DETECTOR_MODEL.c_str(), camera_model.c_str());
+    ASSERT_EQ(ANDOR_DETECTOR_MODEL, camera_model);
 }
