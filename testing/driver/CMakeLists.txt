@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(DriverTests)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 # Gogole Test
 # Download and unpack googletest at configure time
@@ -34,8 +34,7 @@ find_library(
         NAMES "atcore")
 
 set(SOURCE_FILES
-        tests/andor3.cc
-        utilities/andor3/connection.cpp utilities/andor3/camera.cpp utilities/andor3/camera.hpp)
+        tests/andor3.cc)
 
 include_directories(${ANDOR_INC} ${gtest_SOURCE_DIR}/include utilities)
 add_executable(DriverTests ${SOURCE_FILES})

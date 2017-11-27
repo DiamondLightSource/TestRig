@@ -1,41 +1,76 @@
-#include "andor3/connection.hpp"
+#include <stdlib.h>
+#include <iostream>
+#include <memory>
+#include "atcore.h"
 #include "gtest/gtest.h"
 
 const int DETECTOR_ADDRESS = 0;
-const char* ANDOR_DETECTOR_MODEL = "DC-152Q-C00-FI";
+const std::string ANDOR_DETECTOR_MODEL = "DC-152Q-C00-FI";
 
+inline void HandleAndorResultCode(int andor_result_code) {
+    EXPECT_EQ(0, andor_result_code);
+}
+
+void InitializeAndorSdk() {
+    int andor_result_code = AT_InitialiseLibrary();
+    HandleAndorResultCode(andor_result_code);
+}
+
+void CloseCameraConnection(AT_H& camera_handle) {
+    int andor_result_code = AT_Close(camera_handle);
+    HandleAndorResultCode(andor_result_code);
+}
+
+void OpenCameraConnection(AT_H& camera_handle) {
+    camera_handle = AT_HANDLE_UNINITIALISED;
+    int andor_result_code = AT_Open(DETECTOR_ADDRESS, &camera_handle);
+    HandleAndorResultCode(andor_result_code);
+}
+
+void ConnectToCamera(AT_H& camera_handle) {
+    InitializeAndorSdk();
+    OpenCameraConnection(camera_handle);
+}
+
+std::string ConvertAndorWideStringToString(AT_WC* andor_wide_string) {
+    std::wstring wide_string = std::wstring(andor_wide_string);
+    return std::string(wide_string.begin(), wide_string.end());
+}
+
+std::string GetCameraModel(AT_H& camera_handle) {
+    AT_WC camera_model[128];
+    int andor_result_code = AT_GetString(
+            camera_handle, L"Camera Model", camera_model, 128);
+    HandleAndorResultCode(andor_result_code);
+    return ConvertAndorWideStringToString(camera_model);
+}
+
+void CleanUpAndorSdk() {
+    int andor_result_code = AT_FinaliseLibrary();
+    HandleAndorResultCode(andor_result_code);
+}
+
+void DisconnectFromCamera(AT_H& camera_handle) {
+    CloseCameraConnection(camera_handle);
+    CleanUpAndorSdk();
+}
 
 class AndorDriverTest : public testing::Test {
 protected:
     virtual void SetUp() {
-        connection_ = new andor3::Connection(DETECTOR_ADDRESS);
-        connection_->Open();
+        camera_handle = new AT_H(AT_HANDLE_UNINITIALISED);
+        ConnectToCamera(*camera_handle);
     }
 
     virtual void TearDown() {
-        connection_->Close();
-        delete(connection_);
+        DisconnectFromCamera(*camera_handle);
+        delete(camera_handle);
     }
 
-    andor3::Connection* connection_;
+    AT_H* camera_handle;
 };
 
 TEST_F(AndorDriverTest, DevicePresent) {
-    AT_H camera_handle = connection_->ConnectionHandle();
-
-    AT_WC CameraModel[128];
-    AT_GetString(camera_handle, L"camera Model", CameraModel, 128);
-    char szCamModel[128];
-    wcstombs(szCamModel, CameraModel, 64);
-    EXPECT_STREQ(ANDOR_DETECTOR_MODEL, szCamModel);
-}
-
-TEST_F(AndorDriverTest, CanSetExposure) {
-    AT_H camera_handle = connection_->ConnectionHandle();
-
-    double target_exporsure_time = 0.01;
-    AT_SetFloat (camera_handle, L"ExposureTime", target_exporsure_time);
-    double exposure_time;
-    AT_GetFloat(camera_handle, L"ExposureTime", &exposure_time);
-    EXPECT_NEAR(target_exporsure_time, exposure_time, 0.001);
+    std::string camera_model = GetCameraModel(*camera_handle);
+    ASSERT_STREQ(ANDOR_DETECTOR_MODEL.c_str(), camera_model.c_str());
 }
