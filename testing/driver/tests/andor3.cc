@@ -75,7 +75,7 @@ void DisconnectFromCamera(AT_H& camera_handle) {
 class AndorDriverTest : public testing::Test {
 protected:
     virtual void SetUp() {
-        camera_handle = new AT_H(AT_HANDLE_UNINITIALISED);
+        camera_handle = std::make_unique<AT_H>(AT_HANDLE_UNINITIALISED);
         ConnectToCamera(*camera_handle);
     }
 
@@ -84,7 +84,7 @@ protected:
         delete(camera_handle);
     }
 
-    AT_H* camera_handle;
+    std::unique_ptr<AT_H> camera_handle;
 };
 
 TEST_F(AndorDriverTest, DevicePresent) {
