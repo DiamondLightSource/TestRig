@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <iostream>
 #include <memory>
 #include "atcore.h"
 #include "gtest/gtest.h"
