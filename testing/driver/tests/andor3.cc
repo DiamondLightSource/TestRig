@@ -4,11 +4,29 @@
 #include "atcore.h"
 #include "gtest/gtest.h"
 
+/** Address of the detector in the Andor SDK's incremental addressing system **/
 const int DETECTOR_ADDRESS = 0;
+/** Expected model, so we can verify that we have the right detector **/
 const std::string ANDOR_DETECTOR_MODEL = "DC-152Q-C00-FI";
 
+/**
+ * Takes an Andor SDK result code and fails a test if it is not
+ * the success value (defined in atcore.h as AT_SUCCESS)
+ * @param andor_result_code Result code to analyse
+ */
 inline void HandleAndorResultCode(int andor_result_code) {
     EXPECT_EQ(0, andor_result_code);
+}
+
+/**
+ * Helper function for converting a string of type AT_WC* to
+ * a higher-level C++ std::string
+ * @param andor_wide_string The AT_WC* to convert
+ * @return A converted string of type std::string
+ */
+std::string ConvertAndorWideStringToString(AT_WC* andor_wide_string) {
+    std::wstring wide_string = std::wstring(andor_wide_string);
+    return std::string(wide_string.begin(), wide_string.end());
 }
 
 void InitializeAndorSdk() {
@@ -27,14 +45,10 @@ void OpenCameraConnection(AT_H& camera_handle) {
     HandleAndorResultCode(andor_result_code);
 }
 
+
 void ConnectToCamera(AT_H& camera_handle) {
     InitializeAndorSdk();
     OpenCameraConnection(camera_handle);
-}
-
-std::string ConvertAndorWideStringToString(AT_WC* andor_wide_string) {
-    std::wstring wide_string = std::wstring(andor_wide_string);
-    return std::string(wide_string.begin(), wide_string.end());
 }
 
 std::string GetCameraModel(AT_H& camera_handle) {
@@ -55,6 +69,11 @@ void DisconnectFromCamera(AT_H& camera_handle) {
     CleanUpAndorSdk();
 }
 
+/**
+ * This base class exists in case any more tests are needed, and to keep the test
+ * function as small as possible. It connects to and disconnects from the camera
+ * safely before and after a test.
+ */
 class AndorDriverTest : public testing::Test {
 protected:
     virtual void SetUp() {
