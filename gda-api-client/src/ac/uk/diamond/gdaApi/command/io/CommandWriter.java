@@ -1,12 +1,11 @@
 package ac.uk.diamond.gdaApi.command.io;
 
 import java.io.*;
-import java.net.Socket;
 
 /**
  * Allows user to send commands to and from a telnet server or similar.
  */
-public class CommandWriter<TCommandModel> implements CommandSender<TCommandModel>{
+public class CommandWriter<TCommandModel> implements CommandModelRunner<TCommandModel> {
 
     private DataOutput writer;
 

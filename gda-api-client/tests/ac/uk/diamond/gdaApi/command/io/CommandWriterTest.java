@@ -17,6 +17,7 @@ public class CommandWriterTest {
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
+
     private CommandWriter<Integer> writer;
     private DataOutput mockOutput;
 
