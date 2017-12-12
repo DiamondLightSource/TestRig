@@ -5,7 +5,7 @@ import ac.uk.diamond.gdaApi.serialization.Serializer;
 import java.io.*;
 
 /**
- * Allows user to send commands to and from a telnet server or similar.
+ * Allows user to run commands to and from a telnet server or similar.
  */
 public class CommandWriter<TCommandModel>
         implements CommandModelRunner<TCommandModel> {
@@ -31,7 +31,7 @@ public class CommandWriter<TCommandModel>
     }
 
     @Override
-    public void send(TCommandModel commandModel) throws IOException {
+    public void run(TCommandModel commandModel) throws IOException {
         output.writeChars(commandModel.toString());
     }
 }

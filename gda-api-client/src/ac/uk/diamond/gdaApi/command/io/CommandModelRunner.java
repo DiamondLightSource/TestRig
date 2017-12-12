@@ -8,8 +8,8 @@ import java.io.IOException;
 public interface CommandModelRunner<TCommand> {
     /**
      * Runs a command
-     * @param command The command to send.
-     * @throws IOException If unable to send.
+     * @param command The command to run.
+     * @throws IOException If unable to run.
      */
-    void send(TCommand command) throws IOException;
+    void run(TCommand command) throws IOException;
 }

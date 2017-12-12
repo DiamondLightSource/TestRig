@@ -43,22 +43,22 @@ public class CommandWriterTest {
     }
 
     @Test
-    public void testIoExceptionThrownInSendWhenWriterThrows()
+    public void testIoExceptionThrownInRunWhenWriterThrows()
             throws IOException {
         expectIoException();
         makeMockWriterThrowIoException(mockOutput);
-        writer.send(1);
+        writer.run(1);
     }
 
     @Test
     public void testWriterSendsChar() throws IOException {
-        writer.send(1);
+        writer.run(1);
         verifyCharsWritten(mockOutput, "1");
     }
 
     @Test
     public void testWriterSendsChars() throws IOException {
-        writer.send(12);
+        writer.run(12);
         verifyCharsWritten(mockOutput, "12");
     }
 
