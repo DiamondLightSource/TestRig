@@ -1,5 +1,6 @@
 package ac.uk.diamond.gdaApi.command.io;
 
+import ac.uk.diamond.gdaApi.serialization.Serializer;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.Before;
@@ -20,11 +21,25 @@ public class CommandWriterTest {
 
     private CommandWriter<Integer> writer;
     private DataOutput mockOutput;
+    private Serializer<Integer, String> mockSerializer;
 
     @Before
     public void setUp() {
+        mockSerializer = (Serializer<Integer, String>) (mock(Serializer.class));
         mockOutput = makeMockWriter();
-        writer = makeCommandWriter(mockOutput);
+        writer = makeCommandWriter(mockOutput, mockSerializer);
+    }
+
+    @Test
+    public void testOutputCannotBeNull() throws IOException {
+        expectIllegalArgumentException();
+        makeCommandWriter(null, mockSerializer);
+    }
+
+    @Test
+    public void testSerializerCannotBeNull() {
+        expectIllegalArgumentException();
+        makeCommandWriter(mockOutput, null);
     }
 
     @Test
@@ -51,8 +66,8 @@ public class CommandWriterTest {
         verify(mockWriter, times(1)).writeChars(chars);
     }
 
-    private CommandWriter<Integer> makeCommandWriter(DataOutput writer) {
-        return new CommandWriter<>(writer);
+    private CommandWriter<Integer> makeCommandWriter(DataOutput writer, Serializer<Integer, String> serializer) {
+        return new CommandWriter<>(writer, serializer);
     }
 
     private DataOutput makeMockWriter() {
@@ -65,5 +80,9 @@ public class CommandWriterTest {
 
     private void expectIoException() {
         exception.expect(IOException.class);
+    }
+
+    private void expectIllegalArgumentException() {
+        exception.expect(IllegalArgumentException.class);
     }
 }
