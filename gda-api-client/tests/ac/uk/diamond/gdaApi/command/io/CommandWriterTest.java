@@ -51,15 +51,16 @@ public class CommandWriterTest {
     }
 
     @Test
-    public void testWriterSendsChar() throws IOException {
+    public void testSerializerCalledWhenRunning() throws IOException {
         writer.run(1);
-        verifyCharsWritten(mockOutput, "1");
+        verify(mockSerializer, times(1)).serialize(1);
     }
 
     @Test
-    public void testWriterSendsChars() throws IOException {
-        writer.run(12);
-        verifyCharsWritten(mockOutput, "12");
+    public void testWriterSendsString() throws IOException {
+        when(mockSerializer.serialize(1)).thenReturn("1");
+        writer.run(1);
+        verifyCharsWritten(mockOutput, "1");
     }
 
     private void verifyCharsWritten(DataOutput mockWriter, String chars) throws IOException {

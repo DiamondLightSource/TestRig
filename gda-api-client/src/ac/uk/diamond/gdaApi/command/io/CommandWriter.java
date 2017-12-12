@@ -39,6 +39,7 @@ public class CommandWriter<TCommandModel>
 
     @Override
     public void run(TCommandModel commandModel) throws IOException {
-        output.writeChars(commandModel.toString());
+        String serialized = serializer.serialize(commandModel);
+        output.writeChars(serialized);
     }
 }
