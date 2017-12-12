@@ -6,11 +6,11 @@ public class GdaCommandModel {
     private final String commandString;
 
     public GdaCommandModel(String commandString) {
-        handleNullCommandString(commandString);
+        exceptCommandStringIfNull(commandString);
         this.commandString = commandString;
     }
 
-    private void handleNullCommandString(String command) {
+    private void exceptCommandStringIfNull(String command) {
         if ( command == null )
             throw new IllegalArgumentException(NULL_COMMAND_ERROR_MESSAGE);
     }
@@ -18,5 +18,4 @@ public class GdaCommandModel {
     public String getCommandString() {
         return commandString;
     }
-
 }
