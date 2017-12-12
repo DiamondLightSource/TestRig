@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * Describes functionality for sending commands to an external console.
  */
-public interface CommandSender<TCommand> {
+public interface CommandModelRunner<TCommand> {
     /**
      * Runs a command
      * @param command The command to send.
