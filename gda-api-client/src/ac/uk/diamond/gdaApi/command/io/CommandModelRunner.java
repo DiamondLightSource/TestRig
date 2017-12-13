@@ -5,11 +5,11 @@ import java.io.IOException;
 /**
  * Describes functionality for sending commands to an external console.
  */
-public interface CommandModelRunner<TCommand> {
+public interface CommandModelRunner<TCommandModel> {
     /**
      * Runs a command
      * @param command The command to run.
      * @throws IOException If unable to run.
      */
-    void run(TCommand command) throws IOException;
+    void run(TCommandModel command) throws IOException;
 }
