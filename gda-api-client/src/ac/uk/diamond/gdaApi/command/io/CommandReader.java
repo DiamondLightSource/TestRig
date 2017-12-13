@@ -12,18 +12,30 @@ public class CommandReader<TOutputModel>
 
     public CommandReader(
             DataInput input, Deserializer<String, TOutputModel> deserializer) {
-        if ( input == null )
-            throw new IllegalArgumentException("Data input cannot be null");
+        exceptInputIfNull(input);
+        this.input = input;
+        exceptDeserializerIfNull(deserializer);
+        this.deserializer = deserializer;
+    }
+
+    private void exceptDeserializerIfNull(Deserializer<String, TOutputModel> deserializer) {
         if ( deserializer == null )
             throw new IllegalArgumentException(
                     "Deserializer input cannot be null");
-        this.input = input;
-        this.deserializer = deserializer;
+    }
+
+    private void exceptInputIfNull(DataInput input) {
+        if ( input == null )
+            throw new IllegalArgumentException("Data input cannot be null");
     }
 
     @Override
     public TOutputModel next() throws IOException {
-        String raw = input.readUTF();
+        String raw = readRawInput();
         return deserializer.deserialize(raw);
+    }
+
+    private String readRawInput() throws IOException {
+        return input.readUTF();
     }
 }

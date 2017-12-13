@@ -21,8 +21,8 @@ public class CommandWriter<TCommandModel>
     public CommandWriter(
             DataOutput output, Serializer<TCommandModel, String> serializer) {
         exceptOutputIfNull(output);
-        exceptSerializerIfNull(serializer);
         this.output = output;
+        exceptSerializerIfNull(serializer);
         this.serializer = serializer;
     }
 
@@ -39,7 +39,11 @@ public class CommandWriter<TCommandModel>
 
     @Override
     public void run(TCommandModel commandModel) throws IOException {
-        String serialized = serializer.serialize(commandModel);
+        String serialized = serializeCommandModel(commandModel);
         output.writeChars(serialized);
+    }
+
+    private String serializeCommandModel(TCommandModel commandModel) {
+        return serializer.serialize(commandModel);
     }
 }
