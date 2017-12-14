@@ -2,6 +2,8 @@ package ac.uk.diamond.gdaApi.command.gda;
 
 import ac.uk.diamond.gdaApi.command.io.CommandModelRunner;
 
-public class ListScannablesService {
-    private CommandModelRunner<ListScannablesCommand> runner;
+import java.util.List;
+
+public interface ListScannablesService<TOutput> {
+    TOutput collectList();
 }
