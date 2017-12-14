@@ -11,5 +11,5 @@ public interface CommandModelRunner<TCommandModel> {
      * @param command The command to run.
      * @throws IOException If unable to run.
      */
-    void run(TCommandModel command) throws IOException;
+    void run(TCommandModel command);
 }

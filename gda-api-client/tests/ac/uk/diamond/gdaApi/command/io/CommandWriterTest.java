@@ -45,7 +45,7 @@ public class CommandWriterTest {
     @Test
     public void testIoExceptionThrownInRunWhenWriterThrows()
             throws IOException {
-        expectIoException();
+        expectRuntimeException();
         makeMockWriterThrowIoException(mockOutput);
         writer.run(1);
     }
@@ -85,5 +85,9 @@ public class CommandWriterTest {
 
     private void expectIllegalArgumentException() {
         exception.expect(IllegalArgumentException.class);
+    }
+
+    private void expectRuntimeException() {
+        exception.expect(RuntimeException.class);
     }
 }
