@@ -40,8 +40,12 @@ public class CommandWriter<TCommandModel>
     @Override
     public void run(TCommandModel commandModel) {
         String serialized = serializeCommandModel(commandModel);
+        writeData(serialized);
+    }
+
+    private void writeData(String serializedData) {
         try {
-            output.writeChars(serialized);
+            output.writeChars(serializedData);
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }

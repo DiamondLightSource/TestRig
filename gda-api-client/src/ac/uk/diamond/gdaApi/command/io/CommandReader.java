@@ -30,12 +30,24 @@ public class CommandReader<TOutputModel>
     }
 
     @Override
-    public TOutputModel next() throws IOException {
-        String raw = readRawInput();
-        return deserializer.deserialize(raw);
+    public TOutputModel next() {
+        String raw = tryToReadRawInput();
+        return tryToDeserialize(raw);
     }
 
-    private String readRawInput() throws IOException {
-        return input.readUTF();
+    private String tryToReadRawInput() {
+        try {
+            return input.readUTF();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    private TOutputModel tryToDeserialize(String serializedData) {
+        try {
+            return deserializer.deserialize(serializedData);
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 }

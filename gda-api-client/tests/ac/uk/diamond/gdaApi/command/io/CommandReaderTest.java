@@ -45,7 +45,7 @@ public class CommandReaderTest {
     @Test
     public void testNextThrowsIoExceptionIfInputThrowsIoException()
             throws IOException {
-        expectIoException();
+        expectRuntimeException();
         when(mockInput.readUTF()).thenThrow(new IOException());
         reader.next();
     }
@@ -53,7 +53,7 @@ public class CommandReaderTest {
     @Test
     public void testNextThrowsIoExceptionIfDeserializerThrowsIoException()
             throws IOException {
-        expectIoException();
+        expectRuntimeException();
         when(mockDeserializer.deserialize(any())).thenThrow(new IOException());
         reader.next();
     }
@@ -84,5 +84,9 @@ public class CommandReaderTest {
 
     private void expectIllegalArgumentException() {
         exception.expect(IllegalArgumentException.class);
+    }
+
+    private void expectRuntimeException() {
+        exception.expect(RuntimeException.class);
     }
 }
