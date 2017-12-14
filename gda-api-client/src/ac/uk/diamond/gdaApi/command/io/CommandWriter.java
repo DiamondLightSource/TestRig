@@ -1,8 +1,7 @@
 package ac.uk.diamond.gdaApi.command.io;
 
-import ac.uk.diamond.gdaApi.serialization.Serializer;
-
 import java.io.*;
+import java.util.function.Function;
 
 /**
  * Allows user to run commands to and from a telnet server or similar.
@@ -16,10 +15,10 @@ public class CommandWriter<TCommandModel>
             = "Serializer cannot be null";
 
     private DataOutput output;
-    private Serializer<TCommandModel, String> serializer;
+    private Function<TCommandModel, String> serializer;
 
     public CommandWriter(
-            DataOutput output, Serializer<TCommandModel, String> serializer) {
+            DataOutput output, Function<TCommandModel, String> serializer) {
         exceptOutputIfNull(output);
         this.output = output;
         exceptSerializerIfNull(serializer);
@@ -27,7 +26,7 @@ public class CommandWriter<TCommandModel>
     }
 
     private void exceptSerializerIfNull(
-            Serializer<TCommandModel, String> serializer) {
+            Function<TCommandModel, String> serializer) {
         if ( serializer == null )
             throw new IllegalArgumentException(NULL_SERIALIZER_ERROR_MESSAGE);
     }
@@ -52,6 +51,6 @@ public class CommandWriter<TCommandModel>
     }
 
     private String serializeCommandModel(TCommandModel commandModel) {
-        return serializer.serialize(commandModel);
+        return serializer.apply(commandModel);
     }
 }

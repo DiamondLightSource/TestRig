@@ -1,6 +1,5 @@
 package ac.uk.diamond.gdaApi.command.io;
 
-import ac.uk.diamond.gdaApi.serialization.Deserializer;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -8,6 +7,7 @@ import org.junit.rules.ExpectedException;
 
 import java.io.DataInput;
 import java.io.IOException;
+import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -20,12 +20,12 @@ public class CommandReaderTest {
 
     private CommandReader<Integer> reader;
     private DataInput mockInput;
-    private Deserializer<String, Integer> mockDeserializer;
+    private Function<String, Integer> mockDeserializer;
 
     @Before
     public void setUp() {
         mockDeserializer =
-                (Deserializer<String, Integer>) mock(Deserializer.class);
+                (Function<String, Integer>) mock(Function.class);
         mockInput = mock(DataInput.class);
         reader = makeCommandReader(mockInput, mockDeserializer);
     }
@@ -54,19 +54,19 @@ public class CommandReaderTest {
     public void testDeserializerInvoked() throws IOException {
         when(mockInput.readUTF()).thenReturn("1");
         reader.next();
-        verify(mockDeserializer, times(1)).deserialize("1");
+        verify(mockDeserializer, times(1)).apply("1");
     }
 
     @Test
     public void testNextReadsString() throws IOException {
         when(mockInput.readUTF()).thenReturn("1");
-        when(mockDeserializer.deserialize("1")).thenReturn(1);
+        when(mockDeserializer.apply("1")).thenReturn(1);
         int next = reader.next();
         assertEquals(1, next);
     }
 
     private CommandReader<Integer> makeCommandReader(
-            DataInput input, Deserializer<String, Integer> deserializer) {
+            DataInput input, Function<String, Integer> deserializer) {
         return new CommandReader<>(input, deserializer);
     }
 
