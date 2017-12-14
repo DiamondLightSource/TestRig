@@ -10,7 +10,7 @@ public class ListCommand implements Command {
 
     public ListCommand(CommandModelRunner<ListCommandModel> runner,
                        ListCommandModel commandModel) {
-        if  ( runner == null )
+        if ( runner == null )
             throw new IllegalArgumentException("Command runner cannot be null");
         this.runner = runner;
         if ( commandModel == null )
