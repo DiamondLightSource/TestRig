@@ -4,5 +4,5 @@ import java.io.IOException;
 
 public interface Deserializer<TDeserializable, TDeserialized> {
     TDeserialized deserialize(
-            TDeserializable deserializable) throws IOException;
+            TDeserializable deserializable);
 }

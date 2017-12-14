@@ -44,10 +44,6 @@ public class CommandReader<TOutputModel>
     }
 
     private TOutputModel tryToDeserialize(String serializedData) {
-        try {
-            return deserializer.deserialize(serializedData);
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
+        return deserializer.deserialize(serializedData);
     }
 }

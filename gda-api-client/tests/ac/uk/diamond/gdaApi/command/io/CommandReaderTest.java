@@ -51,14 +51,6 @@ public class CommandReaderTest {
     }
 
     @Test
-    public void testNextThrowsIoExceptionIfDeserializerThrowsIoException()
-            throws IOException {
-        expectRuntimeException();
-        when(mockDeserializer.deserialize(any())).thenThrow(new IOException());
-        reader.next();
-    }
-
-    @Test
     public void testDeserializerInvoked() throws IOException {
         when(mockInput.readUTF()).thenReturn("1");
         reader.next();
