@@ -1,3 +1,6 @@
+# Ouput folders
+gda-api-client/out
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
