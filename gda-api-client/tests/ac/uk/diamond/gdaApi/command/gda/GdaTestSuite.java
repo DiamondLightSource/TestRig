@@ -4,5 +4,5 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GdaCommandModelTest.class, ListCommandTest.class})
+@Suite.SuiteClasses({ListCommandModelTest.class, ListCommandTest.class})
 public class GdaTestSuite { }

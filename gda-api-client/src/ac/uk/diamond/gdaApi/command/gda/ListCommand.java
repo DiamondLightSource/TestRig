@@ -1,17 +1,15 @@
-package ac.uk.diamond.gdaApi.command.gda.listCommand;
+package ac.uk.diamond.gdaApi.command.gda;
 
 import ac.uk.diamond.gdaApi.command.Command;
-import ac.uk.diamond.gdaApi.command.gda.GdaCommandModel;
+import ac.uk.diamond.gdaApi.command.gda.ListCommandModel;
 import ac.uk.diamond.gdaApi.command.io.CommandModelRunner;
 
-import java.io.IOException;
-
 public class ListCommand implements Command {
-    private CommandModelRunner<GdaCommandModel> runner;
-    private GdaCommandModel commandModel;
+    private CommandModelRunner<ListCommandModel> runner;
+    private ListCommandModel commandModel;
 
-    public ListCommand(CommandModelRunner<GdaCommandModel> runner,
-                       GdaCommandModel commandModel) {
+    public ListCommand(CommandModelRunner<ListCommandModel> runner,
+                       ListCommandModel commandModel) {
         if  ( runner == null )
             throw new IllegalArgumentException("Command runner cannot be null");
         this.runner = runner;
@@ -22,7 +20,7 @@ public class ListCommand implements Command {
 
     @Override
     public void run() {
-
+        runner.run(commandModel);
     }
 }
 

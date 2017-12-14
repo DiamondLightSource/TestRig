@@ -6,7 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
-public class GdaCommandModelTest {
+public class ListCommandModelTest {
     public static final String COMMAND_STRING = "bananas";
 
     @Rule public final ExpectedException exception = ExpectedException.none();
@@ -14,12 +14,12 @@ public class GdaCommandModelTest {
     @Test
     public void testCommandStringCannotBeNull() {
         exception.expect(IllegalArgumentException.class);
-        new GdaCommandModel(null);
+        new ListCommandModel(null);
     }
 
     @Test
     public void testCommandStringInitializedByConstructor() {
-        GdaCommandModel commandModel = new GdaCommandModel(COMMAND_STRING);
+        ListCommandModel commandModel = new ListCommandModel(COMMAND_STRING);
         assertEquals(COMMAND_STRING, commandModel.getCommandString());
     }
 }
