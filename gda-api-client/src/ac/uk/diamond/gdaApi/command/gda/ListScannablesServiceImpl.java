@@ -3,7 +3,6 @@ package ac.uk.diamond.gdaApi.command.gda;
 import ac.uk.diamond.gdaApi.command.io.CommandModelRunner;
 import ac.uk.diamond.gdaApi.command.io.CommandOutput;
 
-import java.util.List;
 
 public class ListScannablesServiceImpl<TOutput> implements ListScannablesService {
     private CommandModelRunner<ListScannablesCommand> runner;
