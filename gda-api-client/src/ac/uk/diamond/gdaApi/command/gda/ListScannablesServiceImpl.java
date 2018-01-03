@@ -4,7 +4,8 @@ import ac.uk.diamond.gdaApi.command.io.CommandModelRunner;
 import ac.uk.diamond.gdaApi.command.io.CommandOutput;
 
 
-public class ListScannablesServiceImpl<TOutput> implements ListScannablesService {
+public class ListScannablesServiceImpl<TOutput>
+        implements ListScannablesService<TOutput> {
     private CommandModelRunner<ListScannablesCommand> runner;
     private CommandOutput<TOutput> output;
 
@@ -15,7 +16,7 @@ public class ListScannablesServiceImpl<TOutput> implements ListScannablesService
             throw new IllegalArgumentException("Runner cannot be null");
         this.runner = runner;
         if ( output == null )
-            throw new IllegalArgumentException("Output cannot be null");;
+            throw new IllegalArgumentException("Output cannot be null");
         this.output = output;
     }
 
