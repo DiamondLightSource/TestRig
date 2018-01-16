@@ -1,5 +1,6 @@
-package ac.uk.diamond.gdaApi.command.gda;
+package ac.uk.diamond.gdaApi.service;
 
+import ac.uk.diamond.gdaApi.service.ListScannablesCommand;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,4 +1,4 @@
-package ac.uk.diamond.gdaApi.command.gda;
+package ac.uk.diamond.gdaApi.service;
 
 import ac.uk.diamond.gdaApi.command.io.CommandRunner;
 import ac.uk.diamond.gdaApi.command.io.CommandOutputSupplier;

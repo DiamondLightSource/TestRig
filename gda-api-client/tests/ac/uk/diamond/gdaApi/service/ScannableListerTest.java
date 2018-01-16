@@ -1,7 +1,9 @@
-package ac.uk.diamond.gdaApi.command.gda;
+package ac.uk.diamond.gdaApi.service;
 
 import ac.uk.diamond.gdaApi.command.io.CommandRunner;
 import ac.uk.diamond.gdaApi.command.io.CommandOutputSupplier;
+import ac.uk.diamond.gdaApi.service.ListScannablesCommand;
+import ac.uk.diamond.gdaApi.service.ScannableLister;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

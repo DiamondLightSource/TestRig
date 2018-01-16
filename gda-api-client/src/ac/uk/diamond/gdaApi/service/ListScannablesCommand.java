@@ -1,4 +1,4 @@
-package ac.uk.diamond.gdaApi.command.gda;
+package ac.uk.diamond.gdaApi.service;
 
 public class ListScannablesCommand {
     private static final String COMMAND_STRING = "ls_names";
