@@ -38,8 +38,8 @@ public class CommandWriter<TCommandModel>
 
     @Override
     public void run(TCommandModel commandModel) {
-        String serialized = serializeCommandModel(commandModel);
-        writeData(serialized);
+        String serializedCommand = serializeCommandModel(commandModel);
+        writeData(serializedCommand);
     }
 
     private void writeData(String serializedData) {
