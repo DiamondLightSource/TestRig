@@ -1,4 +1,4 @@
-package ac.uk.diamond.gdaApi.command.io;
+package ac.uk.diamond.gdaApi.command;
 
 import java.io.*;
 import java.util.function.Function;

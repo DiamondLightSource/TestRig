@@ -1,5 +1,6 @@
-package ac.uk.diamond.gdaApi.command.io;
+package ac.uk.diamond.gdaApi.command;
 
+import ac.uk.diamond.gdaApi.command.CommandReader;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
