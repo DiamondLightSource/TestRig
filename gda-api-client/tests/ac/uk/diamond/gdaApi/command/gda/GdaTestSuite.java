@@ -5,5 +5,5 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ListScannablesCommandTest.class,
-        ListScannablesServiceImplTest.class})
+        ScannableListerTest.class})
 public class GdaTestSuite { }

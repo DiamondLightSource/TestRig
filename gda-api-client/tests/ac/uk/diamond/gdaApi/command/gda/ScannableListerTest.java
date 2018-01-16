@@ -7,36 +7,39 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-public class ListScannablesServiceImplTest {
+public class ScannableListerTest {
+    public static final List<String> TEST_LIST = Arrays.asList("a", "b", "c");
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
-    private ListScannablesService<Integer> service;
+    private ListScannablesService<List<String>> service;
     private CommandModelRunner<ListScannablesCommand> runner;
-    private CommandOutput<Integer> output;
+    private CommandOutput<List<String>> output;
 
     @Before
     public void setUp() {
         runner = makeMockRunner();
         output = makeMockOutput();
-        service = new ListScannablesServiceImpl<>(
-                runner, output);
+        service = new ScannableLister(runner, output);
     }
 
     @Test
     public void testRunnerCannotBeNull() {
         expectIllegalArgumentException();
-        new ListScannablesServiceImpl<Integer>(null, output);
+        new ScannableLister(null, output);
     }
 
     @Test
     public void testOutputCannotBeNull() {
         expectIllegalArgumentException();
-        new ListScannablesServiceImpl<Integer>(runner, null);
+        new ScannableLister(runner, null);
     }
 
     @Test
@@ -53,9 +56,9 @@ public class ListScannablesServiceImplTest {
 
     @Test
     public void testReturnsOutputResult() {
-        when(output.next()).thenReturn(1);
-        int list = service.collectList();
-        assertEquals(1, list);
+        when(output.next()).thenReturn(TEST_LIST);
+        List<String> list = service.collectList();
+        assertEquals(TEST_LIST, list);
     }
 
     private CommandModelRunner<ListScannablesCommand> makeMockRunner() {
@@ -63,8 +66,8 @@ public class ListScannablesServiceImplTest {
                 mock(CommandModelRunner.class);
     }
 
-    private CommandOutput<Integer> makeMockOutput() {
-        return (CommandOutput<Integer>) mock(CommandOutput.class);
+    private CommandOutput<List<String>> makeMockOutput() {
+        return (CommandOutput<List<String>>) mock(CommandOutput.class);
     }
 
     private void expectIllegalArgumentException() {

@@ -3,15 +3,18 @@ package ac.uk.diamond.gdaApi.command.gda;
 import ac.uk.diamond.gdaApi.command.io.CommandModelRunner;
 import ac.uk.diamond.gdaApi.command.io.CommandOutput;
 
+import java.util.Arrays;
+import java.util.List;
 
-public class ListScannablesServiceImpl<TOutput>
-        implements ListScannablesService<TOutput> {
+
+public class ScannableLister
+        implements ListScannablesService<List<String>> {
     private CommandModelRunner<ListScannablesCommand> runner;
-    private CommandOutput<TOutput> output;
+    private CommandOutput<List<String>> output;
 
-    public ListScannablesServiceImpl(
+    public ScannableLister(
             CommandModelRunner<ListScannablesCommand> runner,
-            CommandOutput<TOutput> output) {
+            CommandOutput<List<String>> output) {
         if ( runner == null )
             throw new IllegalArgumentException("Runner cannot be null");
         this.runner = runner;
@@ -21,7 +24,7 @@ public class ListScannablesServiceImpl<TOutput>
     }
 
     @Override
-    public TOutput collectList() {
+    public List<String> collectList() {
         runner.run(new ListScannablesCommand());
         return output.next();
     }
