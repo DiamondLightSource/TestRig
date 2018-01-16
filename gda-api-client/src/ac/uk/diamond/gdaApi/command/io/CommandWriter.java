@@ -7,7 +7,7 @@ import java.util.function.Function;
  * Allows user to run commands to and from a telnet server or similar.
  */
 public class CommandWriter<TCommandModel>
-        implements CommandModelRunner<TCommandModel> {
+        implements CommandRunner<TCommandModel> {
 
     private static final String NULL_OUTPUT_ERROR_MESSAGE
             = "Data output cannot be null";

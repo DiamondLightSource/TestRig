@@ -1,7 +1,7 @@
 package ac.uk.diamond.gdaApi.command.gda;
 
-import ac.uk.diamond.gdaApi.command.io.CommandModelRunner;
-import ac.uk.diamond.gdaApi.command.io.CommandOutput;
+import ac.uk.diamond.gdaApi.command.io.CommandRunner;
+import ac.uk.diamond.gdaApi.command.io.CommandOutputSupplier;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,8 +20,8 @@ public class ScannableListerTest {
     public final ExpectedException exception = ExpectedException.none();
 
     private ListScannablesService<List<String>> service;
-    private CommandModelRunner<ListScannablesCommand> runner;
-    private CommandOutput<List<String>> output;
+    private CommandRunner<ListScannablesCommand> runner;
+    private CommandOutputSupplier<List<String>> output;
 
     @Before
     public void setUp() {
@@ -61,13 +61,13 @@ public class ScannableListerTest {
         assertEquals(TEST_LIST, list);
     }
 
-    private CommandModelRunner<ListScannablesCommand> makeMockRunner() {
-        return (CommandModelRunner<ListScannablesCommand>)
-                mock(CommandModelRunner.class);
+    private CommandRunner<ListScannablesCommand> makeMockRunner() {
+        return (CommandRunner<ListScannablesCommand>)
+                mock(CommandRunner.class);
     }
 
-    private CommandOutput<List<String>> makeMockOutput() {
-        return (CommandOutput<List<String>>) mock(CommandOutput.class);
+    private CommandOutputSupplier<List<String>> makeMockOutput() {
+        return (CommandOutputSupplier<List<String>>) mock(CommandOutputSupplier.class);
     }
 
     private void expectIllegalArgumentException() {

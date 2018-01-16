@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * Describes functionality for reading command output from an external console.
  */
-public interface CommandOutput<TCommandOutput> {
+public interface CommandOutputSupplier<TCommandOutput> {
     /**
      * Reads the next available output from the console.
      * @return A TCommandOutput output.

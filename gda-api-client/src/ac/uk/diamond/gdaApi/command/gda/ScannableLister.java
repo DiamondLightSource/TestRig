@@ -1,20 +1,19 @@
 package ac.uk.diamond.gdaApi.command.gda;
 
-import ac.uk.diamond.gdaApi.command.io.CommandModelRunner;
-import ac.uk.diamond.gdaApi.command.io.CommandOutput;
+import ac.uk.diamond.gdaApi.command.io.CommandRunner;
+import ac.uk.diamond.gdaApi.command.io.CommandOutputSupplier;
 
-import java.util.Arrays;
 import java.util.List;
 
 
 public class ScannableLister
         implements ListScannablesService<List<String>> {
-    private CommandModelRunner<ListScannablesCommand> runner;
-    private CommandOutput<List<String>> output;
+    private CommandRunner<ListScannablesCommand> runner;
+    private CommandOutputSupplier<List<String>> output;
 
     public ScannableLister(
-            CommandModelRunner<ListScannablesCommand> runner,
-            CommandOutput<List<String>> output) {
+            CommandRunner<ListScannablesCommand> runner,
+            CommandOutputSupplier<List<String>> output) {
         if ( runner == null )
             throw new IllegalArgumentException("Runner cannot be null");
         this.runner = runner;
