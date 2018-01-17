@@ -13,7 +13,6 @@ public class SshClientFacade {
         this.serverDetails = serverDetails;
     }
 
-
     public SshServerDetails getServerDetails() {
         return serverDetails;
     }

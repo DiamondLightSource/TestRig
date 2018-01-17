@@ -25,8 +25,7 @@ public class SshClientFacadeTest {
         SshClientFacade facade = new SshClientFacade(SSH_SERVER_DETAILS);
         assertEquals(SSH_SERVER_DETAILS, facade.getServerDetails());
     }
-
-
+    
     private void expectIllegalArgumentException() {
         exception.expect(IllegalArgumentException.class);
     }
