@@ -4,5 +4,5 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SshClientFacadeTest.class, SshServerTest.class})
+@Suite.SuiteClasses({SshClientFacadeTest.class, SshServerDetailsTest.class})
 public class SshTestSuite {}

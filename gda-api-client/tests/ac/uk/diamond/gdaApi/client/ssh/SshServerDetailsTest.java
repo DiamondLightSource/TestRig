@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
 
-public class SshServerTest {
+public class SshServerDetailsTest {
     public static final String USERNAME = "Bob";
     public static final String HOSTNAME = "bobslittleserver.net";
     public static final int PORT_NUMBER = 8192;
@@ -32,28 +32,28 @@ public class SshServerTest {
 
     @Test
     public void testConstructorInitializesUsername() {
-        SshServer server = makeDefaultServer();
+        SshServerDetails server = makeDefaultServer();
         assertEquals(USERNAME, server.getUsername());
     }
 
     @Test
     public void testConstructorInitializesHostname() {
-        SshServer server = makeDefaultServer();
+        SshServerDetails server = makeDefaultServer();
         assertEquals(HOSTNAME, server.getHostname());
     }
 
     @Test
     public void testConstructorInitializesPortNumber() {
-        SshServer server = makeDefaultServer();
+        SshServerDetails server = makeDefaultServer();
         assertEquals(PORT_NUMBER, server.getPortNumber());
     }
 
-    private SshServer makeDefaultServer() {
+    private SshServerDetails makeDefaultServer() {
         return makeServer(USERNAME, HOSTNAME, PORT_NUMBER);
     }
 
-    private SshServer makeServer(String username, String hostname, int portNumber) {
-        return new SshServer(username, hostname, portNumber);
+    private SshServerDetails makeServer(String username, String hostname, int portNumber) {
+        return new SshServerDetails(username, hostname, portNumber);
     }
 
     private void expectIllegalArgumentException() {
