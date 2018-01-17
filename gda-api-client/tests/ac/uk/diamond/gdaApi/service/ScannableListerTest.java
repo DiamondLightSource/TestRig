@@ -1,7 +1,7 @@
 package ac.uk.diamond.gdaApi.service;
 
 import ac.uk.diamond.gdaApi.command.CommandRunner;
-import ac.uk.diamond.gdaApi.command.CommandOutputSupplier;
+import ac.uk.diamond.gdaApi.command.CommandResultSupplier;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class ScannableListerTest {
 
     private ListScannablesService<List<String>> service;
     private CommandRunner<ListScannablesCommand> runner;
-    private CommandOutputSupplier<List<String>> output;
+    private CommandResultSupplier<List<String>> output;
 
     @Before
     public void setUp() {
@@ -66,8 +66,8 @@ public class ScannableListerTest {
                 mock(CommandRunner.class);
     }
 
-    private CommandOutputSupplier<List<String>> makeMockOutput() {
-        return (CommandOutputSupplier<List<String>>) mock(CommandOutputSupplier.class);
+    private CommandResultSupplier<List<String>> makeMockOutput() {
+        return (CommandResultSupplier<List<String>>) mock(CommandResultSupplier.class);
     }
 
     private void expectIllegalArgumentException() {

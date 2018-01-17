@@ -1,7 +1,7 @@
 package ac.uk.diamond.gdaApi.service;
 
 import ac.uk.diamond.gdaApi.command.CommandRunner;
-import ac.uk.diamond.gdaApi.command.CommandOutputSupplier;
+import ac.uk.diamond.gdaApi.command.CommandResultSupplier;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
 public class ScannableLister
         implements ListScannablesService<List<String>> {
     private CommandRunner<ListScannablesCommand> runner;
-    private CommandOutputSupplier<List<String>> output;
+    private CommandResultSupplier<List<String>> output;
 
     public ScannableLister(
             CommandRunner<ListScannablesCommand> runner,
-            CommandOutputSupplier<List<String>> output) {
+            CommandResultSupplier<List<String>> output) {
         if ( runner == null )
             throw new IllegalArgumentException("Runner cannot be null");
         this.runner = runner;

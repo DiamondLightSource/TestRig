@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.function.Function;
 
 public class CommandReader<TOutputModel>
-        implements CommandOutputSupplier<TOutputModel> {
+        implements CommandResultSupplier<TOutputModel> {
     private DataInput input;
     private Function<String, TOutputModel> deserializer;
 
