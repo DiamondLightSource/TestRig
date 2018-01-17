@@ -5,12 +5,16 @@ import java.io.OutputStream;
 
 public class SshClientFacade {
 
-    public SshClientFacade(String username, String hostname) {
-        if ( username == null )
-            throw new IllegalArgumentException("Username cannot be null");
-        if ( hostname == null )
-            throw new IllegalArgumentException("Hostname cannot be null");
+    private SshServerDetails serverDetails;
+
+    public SshClientFacade(SshServerDetails serverDetails) {
+        if ( serverDetails == null )
+            throw new IllegalArgumentException("Server details cannot be null");
+        this.serverDetails = serverDetails;
     }
 
 
+    public SshServerDetails getServerDetails() {
+        return serverDetails;
+    }
 }
