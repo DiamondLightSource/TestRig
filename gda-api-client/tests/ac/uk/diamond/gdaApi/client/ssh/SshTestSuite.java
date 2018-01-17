@@ -1,8 +1,8 @@
-package ac.uk.diamond.gdaApi.client;
+package ac.uk.diamond.gdaApi.client.ssh;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({SshClientFacadeTest.class})
-public class ClientTestSuite {}
+public class SshTestSuite {}
