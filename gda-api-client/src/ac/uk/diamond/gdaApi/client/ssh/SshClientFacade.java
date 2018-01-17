@@ -1,4 +1,4 @@
-package ac.uk.diamond.gdaApi.client;
+package ac.uk.diamond.gdaApi.client.ssh;
 
 import java.io.InputStream;
 import java.io.OutputStream;
