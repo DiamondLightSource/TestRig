@@ -47,11 +47,24 @@ public class SshClientFacadeTest {
     }
 
     @Test
-    public void testConnectForwardsExceptionIfPresent() throws IOException {
+    public void testConnectForwardsExceptionIfThrownByApacheConnect()
+            throws IOException {
         expectRuntimeException();
         SshClientFacade facade = makeDefaultFacade();
         when(apacheClient.connect(anyString(), anyString(), anyInt()))
                 .thenThrow(new IOException());
+        facade.connect();
+    }
+
+    @Test
+    public void testConnectForwardsExceptionIfThrownByFutureAwait()
+            throws IOException {
+        expectRuntimeException();
+        ConnectFuture mockFuture = mock(ConnectFuture.class);
+        when(mockFuture.await()).thenThrow(new IOException());
+        when(apacheClient.connect(anyString(), anyString(), anyInt()))
+                .thenReturn(mockFuture);
+        SshClientFacade facade = makeDefaultFacade();
         facade.connect();
     }
 
@@ -72,7 +85,7 @@ public class SshClientFacadeTest {
     }
 
     @Test
-    public void testClientIsStoppedAfterUnsuccessfulConnection()
+    public void testClientIsStoppedAfterConnectionFialsWithIoException()
             throws IOException {
         expectRuntimeException();
         SshClientFacade facade = makeDefaultFacade();

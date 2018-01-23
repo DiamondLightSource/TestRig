@@ -1,6 +1,7 @@
 package ac.uk.diamond.gdaApi.client.ssh;
 
 import org.apache.sshd.client.SshClient;
+import org.apache.sshd.client.channel.ChannelExec;
 import org.apache.sshd.client.channel.ClientChannel;
 import org.apache.sshd.client.future.ConnectFuture;
 import org.apache.sshd.client.session.ClientSession;
@@ -10,6 +11,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class SshClientFacade {
+    private static final long AUTHORIZATION_TIMEOUT_MILLISECONDS = 1000;
+
     private final SshClient apacheClient;
     private SshServerDetails serverDetails;
 
@@ -30,7 +33,6 @@ public class SshClientFacade {
     public void connect(){
         ConnectFuture future;
         ClientSession session;
-        ClientChannel channel;
 
         try {
             apacheClient.start();
@@ -39,6 +41,13 @@ public class SshClientFacade {
                     serverDetails.getHostname(),
                     serverDetails.getPortNumber());
             future.await();
+            /*try {
+                session = future.getSession();
+                session.auth().verify(AUTHORIZATION_TIMEOUT_MILLISECONDS);
+            } finally {
+                //session.close();
+            }*/
+
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         } finally {
