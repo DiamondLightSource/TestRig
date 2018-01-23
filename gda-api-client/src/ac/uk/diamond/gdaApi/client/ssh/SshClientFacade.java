@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class SshClientFacade {
-    private static final long AUTHORIZATION_TIMEOUT_MILLISECONDS = 1000;
 
     private final SshClient apacheClient;
     private SshServerDetails serverDetails;
@@ -41,18 +40,14 @@ public class SshClientFacade {
                     serverDetails.getHostname(),
                     serverDetails.getPortNumber());
             future.await();
-            /*try {
-                session = future.getSession();
-                session.auth().verify(AUTHORIZATION_TIMEOUT_MILLISECONDS);
-            } finally {
-                //session.close();
-            }*/
-
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         } finally {
-            apacheClient.stop();
+            disconnect();
         }
+    }
 
+    public void disconnect() {
+        apacheClient.stop();
     }
 }

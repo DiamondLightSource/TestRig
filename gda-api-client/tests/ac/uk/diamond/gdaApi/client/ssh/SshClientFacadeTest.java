@@ -102,6 +102,12 @@ public class SshClientFacadeTest {
         verify(apacheClient, times(1)).stop();
     }
 
+    @Test
+    public void testDisconnectStopsClient() {
+        SshClientFacade facade = makeDefaultFacade();
+        facade.disconnect();
+        verify(apacheClient, times(1)).stop();
+    }
 
     private SshClientFacade makeDefaultFacade() {
 
