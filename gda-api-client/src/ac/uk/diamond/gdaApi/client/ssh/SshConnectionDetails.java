@@ -1,12 +1,12 @@
 package ac.uk.diamond.gdaApi.client.ssh;
 
-public class SshServerDetails {
+public class SshConnectionDetails {
 
     private String username;
     private String hostname;
     private int portNumber;
 
-    public SshServerDetails(String username, String hostname, int portNumber) {
+    public SshConnectionDetails(String username, String hostname, int portNumber) {
         if ( username == null )
             throw new IllegalArgumentException("Username cannot be null");
         if ( hostname == null )

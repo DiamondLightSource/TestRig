@@ -1,22 +1,18 @@
 package ac.uk.diamond.gdaApi.client.ssh;
 
 import org.apache.sshd.client.SshClient;
-import org.apache.sshd.client.channel.ChannelExec;
-import org.apache.sshd.client.channel.ClientChannel;
 import org.apache.sshd.client.future.ConnectFuture;
 import org.apache.sshd.client.session.ClientSession;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class SshClientFacade {
 
     private final SshClient apacheClient;
-    private SshServerDetails serverDetails;
+    private SshConnectionDetails serverDetails;
 
     public SshClientFacade(
-            SshServerDetails serverDetails, SshClient apacheClient) {
+            SshConnectionDetails serverDetails, SshClient apacheClient) {
         if ( serverDetails == null )
             throw new IllegalArgumentException("Server details cannot be null");
         if ( apacheClient == null )
@@ -25,7 +21,7 @@ public class SshClientFacade {
         this.apacheClient = apacheClient;
     }
 
-    public SshServerDetails getServerDetails() {
+    public SshConnectionDetails getServerDetails() {
         return serverDetails;
     }
 

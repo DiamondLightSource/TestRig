@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 public class SshClientFacadeTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
-    private SshServerDetails serverDetails;
+    private SshConnectionDetails serverDetails;
     private SshClient apacheClient;
     private ConnectFuture connectFuture;
 
@@ -114,8 +114,8 @@ public class SshClientFacadeTest {
         return makeFacade(serverDetails, apacheClient);
     }
 
-    private SshServerDetails makeMockServerDetails() {
-        return mock(SshServerDetails.class);
+    private SshConnectionDetails makeMockServerDetails() {
+        return mock(SshConnectionDetails.class);
     }
 
     private SshClient makeMockApacheClient() {
@@ -123,8 +123,8 @@ public class SshClientFacadeTest {
     }
 
     private SshClientFacade makeFacade(
-            SshServerDetails sshServerDetails, SshClient apacheClient) {
-        return new SshClientFacade(sshServerDetails, apacheClient);
+            SshConnectionDetails sshConnectionDetails, SshClient apacheClient) {
+        return new SshClientFacade(sshConnectionDetails, apacheClient);
     }
 
     private void expectIllegalArgumentException() {
