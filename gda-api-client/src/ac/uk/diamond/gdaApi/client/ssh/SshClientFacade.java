@@ -12,12 +12,12 @@ public class SshClientFacade {
     private SshConnectionDetails serverDetails;
 
     public SshClientFacade(
-            SshConnectionDetails serverDetails, SshClient apacheClient) {
-        if ( serverDetails == null )
-            throw new IllegalArgumentException("Server details cannot be null");
+            SshConnectionDetails connectionDetails, SshClient apacheClient) {
+        if ( connectionDetails == null )
+            throw new IllegalArgumentException("Connection details cannot be null");
         if ( apacheClient == null )
             throw new IllegalArgumentException("Apache client cannot be null");
-        this.serverDetails = serverDetails;
+        this.serverDetails = connectionDetails;
         this.apacheClient = apacheClient;
     }
 

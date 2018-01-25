@@ -29,7 +29,7 @@ public class SshClientFacadeTest {
     }
 
     @Test
-    public void testConstructorExceptsNullServerDetails() {
+    public void testConstructorExceptsNullConnectionDetails() {
         expectIllegalArgumentException();
         makeFacade(null, makeMockApacheClient());
     }
