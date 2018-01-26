@@ -12,7 +12,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class SshClientFacadeTest {
+public class SshConnectionFacadeTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
     private SshConnectionDetails serverDetails;
@@ -42,7 +42,7 @@ public class SshClientFacadeTest {
 
     @Test
     public void testConstructorInitializesServerDetails() {
-        SshClientFacade facade = makeDefaultFacade();
+        SshConnectionFacade facade = makeDefaultFacade();
         assertEquals(serverDetails, facade.getServerDetails());
     }
 
@@ -50,7 +50,7 @@ public class SshClientFacadeTest {
     public void testConnectForwardsExceptionIfThrownByApacheConnect()
             throws IOException {
         expectRuntimeException();
-        SshClientFacade facade = makeDefaultFacade();
+        SshConnectionFacade facade = makeDefaultFacade();
         when(apacheClient.connect(anyString(), anyString(), anyInt()))
                 .thenThrow(new IOException());
         facade.connect();
@@ -64,13 +64,13 @@ public class SshClientFacadeTest {
         when(mockFuture.await()).thenThrow(new IOException());
         when(apacheClient.connect(anyString(), anyString(), anyInt()))
                 .thenReturn(mockFuture);
-        SshClientFacade facade = makeDefaultFacade();
+        SshConnectionFacade facade = makeDefaultFacade();
         facade.connect();
     }
 
     @Test
     public void testConnectStartsClient() throws IOException {
-        SshClientFacade facade = makeDefaultFacade();
+        SshConnectionFacade facade = makeDefaultFacade();
         facade.connect();
         verify(apacheClient, times(1))
                 .start();
@@ -78,7 +78,7 @@ public class SshClientFacadeTest {
 
     @Test
     public void testConnectConnectsClient() throws IOException {
-        SshClientFacade facade = makeDefaultFacade();
+        SshConnectionFacade facade = makeDefaultFacade();
         facade.connect();
         verify(apacheClient, times(1))
                 .connect(anyString(), anyString(), anyInt());
@@ -88,7 +88,7 @@ public class SshClientFacadeTest {
     public void testClientIsStoppedAfterConnectionFialsWithIoException()
             throws IOException {
         expectRuntimeException();
-        SshClientFacade facade = makeDefaultFacade();
+        SshConnectionFacade facade = makeDefaultFacade();
         when(apacheClient.connect(anyString(), anyString(), anyInt()))
                 .thenThrow(new IOException());
         facade.connect();
@@ -97,19 +97,19 @@ public class SshClientFacadeTest {
 
     @Test
     public void testClientIsStoppedAfterSuccessfulConnection()  {
-        SshClientFacade facade = makeDefaultFacade();
+        SshConnectionFacade facade = makeDefaultFacade();
         facade.connect();
         verify(apacheClient, times(1)).stop();
     }
 
     @Test
     public void testDisconnectStopsClient() {
-        SshClientFacade facade = makeDefaultFacade();
+        SshConnectionFacade facade = makeDefaultFacade();
         facade.disconnect();
         verify(apacheClient, times(1)).stop();
     }
 
-    private SshClientFacade makeDefaultFacade() {
+    private SshConnectionFacade makeDefaultFacade() {
 
         return makeFacade(serverDetails, apacheClient);
     }
@@ -122,9 +122,9 @@ public class SshClientFacadeTest {
         return mock(SshClient.class);
     }
 
-    private SshClientFacade makeFacade(
+    private SshConnectionFacade makeFacade(
             SshConnectionDetails sshConnectionDetails, SshClient apacheClient) {
-        return new SshClientFacade(sshConnectionDetails, apacheClient);
+        return new SshConnectionFacade(sshConnectionDetails, apacheClient);
     }
 
     private void expectIllegalArgumentException() {

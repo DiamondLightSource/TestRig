@@ -6,12 +6,12 @@ import org.apache.sshd.client.session.ClientSession;
 
 import java.io.IOException;
 
-public class SshClientFacade {
+public class SshConnectionFacade {
 
     private final SshClient apacheClient;
     private SshConnectionDetails serverDetails;
 
-    public SshClientFacade(
+    public SshConnectionFacade(
             SshConnectionDetails connectionDetails, SshClient apacheClient) {
         if ( connectionDetails == null )
             throw new IllegalArgumentException("Connection details cannot be null");
