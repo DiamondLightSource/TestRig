@@ -1,8 +1,10 @@
 package ac.uk.diamond.gdaApi.client.ssh;
 
 import org.apache.sshd.client.SshClient;
+import org.apache.sshd.client.channel.ClientChannel;
 import org.apache.sshd.client.future.ConnectFuture;
 import org.apache.sshd.client.session.ClientSession;
+import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.io.IOException;
 
@@ -27,7 +29,6 @@ public class SshConnectionFacade {
 
     public void connect(){
         ConnectFuture future;
-        ClientSession session;
 
         try {
             apacheClient.start();
@@ -36,6 +37,9 @@ public class SshConnectionFacade {
                     serverDetails.getHostname(),
                     serverDetails.getPortNumber());
             future.await();
+            //try (ClientSession session = future.getSession()) {
+            //    session.auth().verify();
+            //}
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         } finally {
