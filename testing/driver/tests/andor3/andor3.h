@@ -47,9 +47,29 @@ protected:
      */
     std::string ConvertAndorWideStringToString(AT_WC* andor_wide_string);
 
+    /**
+     * Opposite of ConvertAndorWideStringToString, converts
+     * an AT_WC* or Andor wide string
+     * @param andor_wide_string The C++ string to convert
+     * @return A converted string of type AT_WC*
+     */
     const AT_WC* ConvertStringToAndorWideString(std::string input_string);
 
-    void SetIntAndCheck(std::string andor_feature_name);
+    /**
+     * Sets an integer feature on the camera and checks that it was set
+     * successfully.
+     * @param andor_feature_name The name of the feature to set
+     * @param demand_value The value to test
+     */
+    void SetIntAndCheck(std::string andor_feature_name, int demand_value);
+
+    /**
+     * Sets an integer feature on the camera and checks that it was set
+     * successfully.
+     * @param andor_feature_name The name of the feature to set
+     * @param demand_value The value to test
+     */
+    void SetEnumAndCheck(std::string andor_feature_name, std::string);
 };
 
 #endif //DRIVERTESTS_ANDOR3_H

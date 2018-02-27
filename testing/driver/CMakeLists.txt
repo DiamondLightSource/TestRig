@@ -31,7 +31,7 @@ add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
 include(CMakeListsDls.txt)
 
 set(SOURCE_FILES
-        tests/andor3/andor3.cpp tests/andor3/model.cpp tests/andor3/andor3.h tests/andor3/binning.cpp)
+        tests/andor3/andor3.cpp tests/andor3/model.cpp tests/andor3/andor3.h tests/andor3/binning.cpp tests/andor3/framerate.cpp)
 
 include_directories(${gtest_SOURCE_DIR}/include utilities)
 add_executable(DriverTests ${SOURCE_FILES})
