@@ -39,3 +39,13 @@ void AndorDriverTest::SetEnumAndCheck(std::string andor_feature_name, std::strin
     HandleAndorResultCode(retrieve_result_code);
     ASSERT_EQ(ConvertAndorWideStringToString(actual), demand_value);
 }
+
+void AndorDriverTest::SetFloatAndCheck(std::string andor_feature_name, double demand_value) {
+    const AT_WC* andor_feature_name_wide = ConvertStringToAndorWideString(andor_feature_name);
+    int set_result_code = AT_SetFloat(camera_handle, andor_feature_name_wide, demand_value);
+    HandleAndorResultCode(set_result_code);
+    double actual;
+    int retrieve_result_code = AT_GetFloat(camera_handle, andor_feature_name_wide, &actual);
+    HandleAndorResultCode(retrieve_result_code);
+    ASSERT_NEAR(actual, demand_value, 1e-8);
+}

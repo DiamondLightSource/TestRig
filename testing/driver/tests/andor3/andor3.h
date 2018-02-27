@@ -64,6 +64,14 @@ protected:
     void SetIntAndCheck(std::string andor_feature_name, int demand_value);
 
     /**
+     * Sets a float feature on the camera and checks that it was set
+     * successfully.
+     * @param andor_feature_name The name of the feature to set
+     * @param demand_value The value to test
+     */
+    void SetFloatAndCheck(std::string andor_feature_name, double demand_value);
+
+    /**
      * Sets an integer feature on the camera and checks that it was set
      * successfully.
      * @param andor_feature_name The name of the feature to set
