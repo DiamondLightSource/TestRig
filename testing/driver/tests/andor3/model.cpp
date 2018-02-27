@@ -4,10 +4,10 @@
 const std::string EXPECTED_DETECTOR_MODEL = "DC-152Q-C00-FI";
 
 TEST_F(AndorDriverTest, DevicePresent) {
-    AT_WC camera_model1[128];
+    AT_WC camera_model_wide[128];
     int andor_result_code = AT_GetString(
-            camera_handle, L"Camera Model", camera_model1, 128);
+            camera_handle, L"Camera Model", camera_model_wide, 128);
     HandleAndorResultCode(andor_result_code);
-    std::string camera_model =  ConvertAndorWideStringToString(camera_model1);
+    std::string camera_model =  ConvertAndorWideStringToString(camera_model_wide);
     ASSERT_EQ(EXPECTED_DETECTOR_MODEL, camera_model);
 }

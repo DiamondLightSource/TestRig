@@ -46,6 +46,10 @@ protected:
      * @return A converted string of type std::string
      */
     std::string ConvertAndorWideStringToString(AT_WC* andor_wide_string);
+
+    const AT_WC* ConvertStringToAndorWideString(std::string input_string);
+
+    void SetIntAndCheck(std::string andor_feature_name);
 };
 
 #endif //DRIVERTESTS_ANDOR3_H
