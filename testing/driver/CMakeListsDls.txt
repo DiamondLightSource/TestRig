@@ -1,12 +1,18 @@
 # If you are using the Andor3 SDK on a dls machine, this script will point CMake to the SDK in the
 # ADAndor3 support module, so you don't have to install it yourself.
 
-set(LATEST_ADANDOR3_VERSION 2-1dls5 STRING)
+set(LATEST_ADANDOR3_VERSION 2-1dls5)
 set(ADANDOR_3 /dls_sw/prod/R3.14.12.3/support/ADAndor3/${LATEST_ADANDOR3_VERSION})
+set(ADANDOR_3_INCLUDE ${ADANDOR_3}/andor3Support/sdk/prefix/include)
+set(ADANDOR_3_LIB ${ADANDOR_3}/andor3Support/sdk/prefix/lib)
 
 if(NOT ADANDOR_3)
     message(FATAL_ERROR "Unable to find dls ADAdnor3 support module: ${ADANDOR_3}")
 endif()
 message(STATUS "Found ${ADANDOR_3}")
-include_directories(${ADANDOR_3}/sdk/prefix/include)
-link_directories(${ADANDOR_3}/sdk/prefix/lib)
+
+include_directories(${ADANDOR_3_INCLUDE})
+message(STATUS "Included ${ADANDOR_3_INCLUDE}")
+
+link_directories(${ADANDOR_3_LIB})
+message(STATUS "Linked ${ADANDOR_3_LIB}")
