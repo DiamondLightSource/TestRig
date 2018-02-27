@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(DriverTests)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Gogole Test
@@ -26,17 +26,13 @@ add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
         ${CMAKE_BINARY_DIR}/googletest-build
         EXCLUDE_FROM_ALL)
 
+
 # Andor SDK 3
-find_path(
-        ANDOR_INC
-        NAMES "atcore.h")
-find_library(
-        ANDOR_LIB
-        NAMES "atcore")
+include(CMakeListsDls.txt)
 
 set(SOURCE_FILES
         tests/andor3.cc)
 
-include_directories(${ANDOR_INC} ${gtest_SOURCE_DIR}/include utilities)
+include_directories(${gtest_SOURCE_DIR}/include utilities)
 add_executable(DriverTests ${SOURCE_FILES})
-target_link_libraries(DriverTests gtest_main ${ANDOR_LIB})
+target_link_libraries(DriverTests gtest_main atcore)
