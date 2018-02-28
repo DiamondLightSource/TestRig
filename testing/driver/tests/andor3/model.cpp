@@ -8,6 +8,7 @@ TEST_F(AndorDriverTest, DevicePresent) {
     int andor_result_code = AT_GetString(
             camera_handle, L"Camera Model", camera_model_wide, 128);
     HandleAndorResultCode(andor_result_code);
-    std::string camera_model =  ConvertAndorWideStringToString(camera_model_wide);
+    std::string camera_model
+            = ConvertAndorWideStringToString(camera_model_wide);
     ASSERT_EQ(EXPECTED_DETECTOR_MODEL, camera_model);
 }

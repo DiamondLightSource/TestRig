@@ -5,9 +5,9 @@
 #include "gtest/gtest.h"
 
 /**
- * This base class exists in case any more tests are needed, and to keep the test
- * function as small as possible. It connects to and disconnects from the camera
- * safely before and after a test.
+ * This base class exists in case any more tests are needed, and to keep the
+ * test function as small as possible. It connects to and disconnects from
+ * the camera safely before and after a test.
  */
 class AndorDriverTest : public testing::Test {
 protected:
