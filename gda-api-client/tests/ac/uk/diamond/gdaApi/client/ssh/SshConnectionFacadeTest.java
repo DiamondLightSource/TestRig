@@ -17,12 +17,14 @@ public class SshConnectionFacadeTest {
     public final ExpectedException exception = ExpectedException.none();
     private SshConnectionDetails serverDetails;
     private SshClient apacheClient;
+    private SshSessionFacade sessionFacade;
     private ConnectFuture connectFuture;
 
     @Before
     public void setUp() throws IOException {
         serverDetails = makeMockServerDetails();
         apacheClient = makeMockApacheClient();
+        sessionFacade = makeMockSessionFacade();
         connectFuture = mock(ConnectFuture.class);
         when(apacheClient.connect(anyString(), anyString(), anyInt()))
                 .thenReturn(connectFuture);
@@ -31,13 +33,19 @@ public class SshConnectionFacadeTest {
     @Test
     public void testConstructorExceptsNullConnectionDetails() {
         expectIllegalArgumentException();
-        makeFacade(null, makeMockApacheClient());
+        makeFacade(null, makeMockApacheClient(), makeMockSessionFacade());
     }
 
     @Test
     public void testConstructorExceptsNullApacheClient() {
         expectIllegalArgumentException();
-        makeFacade(makeMockServerDetails(), null);
+        makeFacade(makeMockServerDetails(), null, makeMockSessionFacade());
+    }
+
+    @Test
+    public void testConstructorExceptsNullSessionFacade() {
+        expectIllegalArgumentException();
+        makeFacade(makeMockServerDetails(), makeMockApacheClient(), null);
     }
 
     @Test
@@ -53,7 +61,7 @@ public class SshConnectionFacadeTest {
         SshConnectionFacade facade = makeDefaultFacade();
         when(apacheClient.connect(anyString(), anyString(), anyInt()))
                 .thenThrow(new IOException());
-        facade.connect();
+        facade.attemptConnection();
     }
 
     @Test
@@ -65,13 +73,13 @@ public class SshConnectionFacadeTest {
         when(apacheClient.connect(anyString(), anyString(), anyInt()))
                 .thenReturn(mockFuture);
         SshConnectionFacade facade = makeDefaultFacade();
-        facade.connect();
+        facade.attemptConnection();
     }
 
     @Test
     public void testConnectStartsClient() throws IOException {
         SshConnectionFacade facade = makeDefaultFacade();
-        facade.connect();
+        facade.attemptConnection();
         verify(apacheClient, times(1))
                 .start();
     }
@@ -79,7 +87,7 @@ public class SshConnectionFacadeTest {
     @Test
     public void testConnectConnectsClient() throws IOException {
         SshConnectionFacade facade = makeDefaultFacade();
-        facade.connect();
+        facade.attemptConnection();
         verify(apacheClient, times(1))
                 .connect(anyString(), anyString(), anyInt());
     }
@@ -91,14 +99,7 @@ public class SshConnectionFacadeTest {
         SshConnectionFacade facade = makeDefaultFacade();
         when(apacheClient.connect(anyString(), anyString(), anyInt()))
                 .thenThrow(new IOException());
-        facade.connect();
-        verify(apacheClient, times(1)).stop();
-    }
-
-    @Test
-    public void testClientIsStoppedAfterSuccessfulConnection()  {
-        SshConnectionFacade facade = makeDefaultFacade();
-        facade.connect();
+        facade.attemptConnection();
         verify(apacheClient, times(1)).stop();
     }
 
@@ -109,9 +110,27 @@ public class SshConnectionFacadeTest {
         verify(apacheClient, times(1)).stop();
     }
 
-    private SshConnectionFacade makeDefaultFacade() {
+    @Test
+    public void testCannotGetSessionWithoutClientBeingOpen() {
+        expectIllegalStateException();
+        when(apacheClient.isOpen()).thenReturn(false);
+        SshConnectionFacade facade = makeDefaultFacade();
+        facade.getSession();
+    }
 
-        return makeFacade(serverDetails, apacheClient);
+    @Test
+    public void testSessionReturnedWhileClientIsOpen() {
+        when(apacheClient.isOpen()).thenReturn(true);
+        SshConnectionFacade facade = makeDefaultFacade();
+        assertEquals(sessionFacade, facade.getSession());
+    }
+
+    private SshConnectionFacade makeDefaultFacade() {
+        return makeFacade(serverDetails, apacheClient, sessionFacade);
+    }
+
+    private SshSessionFacade makeMockSessionFacade() {
+        return new SshSessionFacade();
     }
 
     private SshConnectionDetails makeMockServerDetails() {
@@ -123,8 +142,10 @@ public class SshConnectionFacadeTest {
     }
 
     private SshConnectionFacade makeFacade(
-            SshConnectionDetails sshConnectionDetails, SshClient apacheClient) {
-        return new SshConnectionFacade(sshConnectionDetails, apacheClient);
+            SshConnectionDetails sshConnectionDetails, SshClient apacheClient,
+            SshSessionFacade sessionFacade) {
+        return new SshConnectionFacade(sshConnectionDetails, apacheClient,
+                sessionFacade);
     }
 
     private void expectIllegalArgumentException() {
@@ -133,5 +154,9 @@ public class SshConnectionFacadeTest {
 
     private void expectRuntimeException() {
         exception.expect(RuntimeException.class);
+    }
+
+    private void expectIllegalStateException() {
+        exception.expect(IllegalStateException.class);
     }
 }
