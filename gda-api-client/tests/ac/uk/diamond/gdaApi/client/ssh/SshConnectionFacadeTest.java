@@ -115,6 +115,17 @@ public class SshConnectionFacadeTest {
 
     @Test
     public void testConnectConnectsClient() throws IOException {
+        ConnectFuture connectFuture = mock(ConnectFuture.class);
+        ClientSession session = mock(ClientSession.class);
+        ClientChannel channel = mock(ClientChannel.class);
+        AuthFuture authFuture = mock(AuthFuture.class);
+        when(apacheClient.connect(anyString(), anyString(), anyInt()))
+                .thenReturn(connectFuture);
+        when(connectFuture.getSession()).thenReturn(session);
+        when(session.createChannel(ClientChannel.CHANNEL_SHELL))
+                .thenReturn(channel);
+        when(session.auth()).thenReturn(authFuture);
+
         SshConnectionFacade facade = makeDefaultFacade();
         facade.attemptConnection();
         verify(apacheClient, times(1))
