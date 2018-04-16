@@ -4,56 +4,54 @@ import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.channel.ClientChannel;
 import org.apache.sshd.client.future.ConnectFuture;
 import org.apache.sshd.client.session.ClientSession;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class SshConnectionFacade {
 
     private final SshClient apacheClient;
     private final SshConnectionDetails serverDetails;
-    private final SshSessionFacade sessionFacade;
+    private SshCommunicationStreams communicationStreams;
 
-    public SshConnectionFacade(
-            SshConnectionDetails connectionDetails, SshClient apacheClient,
-            SshSessionFacade sessionFacade) {
+    public SshConnectionFacade(SshConnectionDetails connectionDetails,
+                               SshClient apacheClient,
+                               SshCommunicationStreams communicationStreams) {
         if ( connectionDetails == null )
             throw new IllegalArgumentException(
                     "Connection details cannot be null");
         if ( apacheClient == null )
             throw new IllegalArgumentException("Apache client cannot be null");
-        if ( sessionFacade == null )
-            throw new IllegalArgumentException("Session facade cannot be null");
+        if ( communicationStreams == null )
+            throw new IllegalArgumentException(
+                    "Communication streams cannot be null");
         this.serverDetails = connectionDetails;
         this.apacheClient = apacheClient;
-        this.sessionFacade = sessionFacade;
+        this.communicationStreams = communicationStreams;
     }
 
     public SshConnectionDetails getServerDetails() {
         return serverDetails;
     }
 
-    public SshSessionFacade getSession() {
-        if ( apacheClient.isOpen() )
-            return sessionFacade;
-        else
-            throw new IllegalStateException(
-                    "Cannot provide session while client is not connected");
-    }
-
     public void attemptConnection(){
-        ConnectFuture future;
-
         try {
             apacheClient.start();
-            future = apacheClient.connect(
+            ConnectFuture future = apacheClient.connect(
                     serverDetails.getUsername(),
                     serverDetails.getHostname(),
                     serverDetails.getPortNumber());
             future.await();
-            //try (ClientSession session = future.getSession()) {
-            //    session.auth().verify();
-            //}
+            try (ClientSession session = future.getSession()) {
+                session.auth().verify();
+                try (ClientChannel channel = session.createChannel(
+                        ClientChannel.CHANNEL_SHELL)) {
+                    channel.setIn(communicationStreams.getInputStream());
+                    channel.setOut(communicationStreams.getOutputStream());
+                    channel.setErr(communicationStreams.getErrorStream());
+                }
+            }
         } catch (IOException exception) {
             disconnect();
             throw new RuntimeException(exception);
@@ -63,4 +61,5 @@ public class SshConnectionFacade {
     public void disconnect() {
         apacheClient.stop();
     }
+
 }

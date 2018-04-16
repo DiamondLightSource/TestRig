@@ -5,5 +5,5 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({SshConnectionFacadeTest.class,
-        SshConnectionDetailsTest.class})
+        SshConnectionDetailsTest.class, SshCommunicationStreamsTest.class})
 public class SshTestSuite {}
