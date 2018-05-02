@@ -12,7 +12,7 @@ public class CommandWriter<TCommandModel>
     private static final String NULL_OUTPUT_ERROR_MESSAGE
             = "Data output cannot be null";
     private static final String NULL_SERIALIZER_ERROR_MESSAGE
-            = "Serializer cannot be null";
+            = "Deserializer cannot be null";
 
     private DataOutput output;
     private Function<TCommandModel, String> serializer;

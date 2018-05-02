@@ -29,7 +29,7 @@ public class CommandReader<TOutputModel>
     }
 
     @Override
-    public TOutputModel next() {
+    public TOutputModel nextMessage() {
         String raw = tryToReadRawInput();
         return tryToDeserialize(raw);
     }

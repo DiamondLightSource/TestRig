@@ -1,6 +1,5 @@
 package ac.uk.diamond.gdaApi.command;
 
-import ac.uk.diamond.gdaApi.command.CommandReader;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,13 +47,13 @@ public class CommandReaderTest {
             throws IOException {
         expectRuntimeException();
         when(mockInput.readUTF()).thenThrow(new IOException());
-        reader.next();
+        reader.nextMessage();
     }
 
     @Test
     public void testDeserializerInvoked() throws IOException {
         when(mockInput.readUTF()).thenReturn("1");
-        reader.next();
+        reader.nextMessage();
         verify(mockDeserializer, times(1)).apply("1");
     }
 
@@ -62,7 +61,7 @@ public class CommandReaderTest {
     public void testNextReadsString() throws IOException {
         when(mockInput.readUTF()).thenReturn("1");
         when(mockDeserializer.apply("1")).thenReturn(1);
-        int next = reader.next();
+        int next = reader.nextMessage();
         assertEquals(1, next);
     }
 

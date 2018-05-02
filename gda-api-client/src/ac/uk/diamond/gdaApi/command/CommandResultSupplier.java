@@ -7,8 +7,8 @@ import java.io.IOException;
  */
 public interface CommandResultSupplier<TCommandOutput> {
     /**
-     * Reads the next available output from the console.
+     * Reads the nextMessage available output from the console.
      * @return A TCommandOutput output.
      */
-    TCommandOutput next();
+    TCommandOutput nextMessage();
 }
