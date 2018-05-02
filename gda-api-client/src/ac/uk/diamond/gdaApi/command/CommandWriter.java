@@ -1,5 +1,7 @@
 package ac.uk.diamond.gdaApi.command;
 
+import ac.uk.diamond.gdaApi.client.serialization.Serializer;
+
 import java.io.*;
 import java.util.function.Function;
 
@@ -15,10 +17,10 @@ public class CommandWriter<TCommandModel>
             = "Deserializer cannot be null";
 
     private DataOutput output;
-    private Function<TCommandModel, String> serializer;
+    private Serializer<TCommandModel, String> serializer;
 
     public CommandWriter(
-            DataOutput output, Function<TCommandModel, String> serializer) {
+            DataOutput output, Serializer<TCommandModel, String> serializer) {
         exceptOutputIfNull(output);
         this.output = output;
         exceptSerializerIfNull(serializer);
@@ -26,7 +28,7 @@ public class CommandWriter<TCommandModel>
     }
 
     private void exceptSerializerIfNull(
-            Function<TCommandModel, String> serializer) {
+            Serializer<TCommandModel, String> serializer) {
         if ( serializer == null )
             throw new IllegalArgumentException(NULL_SERIALIZER_ERROR_MESSAGE);
     }
@@ -51,6 +53,6 @@ public class CommandWriter<TCommandModel>
     }
 
     private String serializeCommandModel(TCommandModel commandModel) {
-        return serializer.apply(commandModel);
+        return serializer.serialize(commandModel);
     }
 }

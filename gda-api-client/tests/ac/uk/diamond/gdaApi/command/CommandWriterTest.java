@@ -1,5 +1,6 @@
 package ac.uk.diamond.gdaApi.command;
 
+import ac.uk.diamond.gdaApi.client.serialization.Serializer;
 import ac.uk.diamond.gdaApi.command.CommandWriter;
 import org.junit.Rule;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.junit.rules.ExpectedException;
 
 import java.io.DataOutput;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
@@ -22,11 +24,11 @@ public class CommandWriterTest {
 
     private CommandWriter<Integer> writer;
     private DataOutput mockOutput;
-    private Function<Integer, String> mockSerializer;
+    private Serializer<Integer, String> mockSerializer;
 
     @Before
     public void setUp() {
-        mockSerializer = (Function<Integer, String>) (mock(Function.class));
+        mockSerializer = (Serializer<Integer, String>) mock(Serializer.class);
         mockOutput = makeMockWriter();
         writer = makeCommandWriter(mockOutput, mockSerializer);
     }
@@ -54,22 +56,24 @@ public class CommandWriterTest {
     @Test
     public void testSerializerCalledWhenRunning() throws IOException {
         writer.run(1);
-        verify(mockSerializer, times(1)).apply(1);
+        verify(mockSerializer, times(1)).serialize(1);
     }
 
     @Test
     public void testWriterSendsString() throws IOException {
-        when(mockSerializer.apply(1)).thenReturn("1");
+        when(mockSerializer.serialize(1)).thenReturn("1");
         writer.run(1);
         verifyCharsWritten(mockOutput, "1");
     }
 
-    private void verifyCharsWritten(DataOutput mockWriter, String chars) throws IOException {
+    private void verifyCharsWritten(DataOutput mockWriter, String chars)
+            throws IOException {
         verify(mockWriter, times(1)).writeChars(chars);
     }
 
-    private CommandWriter<Integer> makeCommandWriter(DataOutput writer, Function<Integer, String> serializer) {
-        return new CommandWriter<>(writer, serializer);
+    private CommandWriter<Integer> makeCommandWriter(
+            DataOutput writer, Serializer<Integer, String> serializer) {
+        return new CommandWriter<Integer>(writer, serializer);
     }
 
     private DataOutput makeMockWriter() {
