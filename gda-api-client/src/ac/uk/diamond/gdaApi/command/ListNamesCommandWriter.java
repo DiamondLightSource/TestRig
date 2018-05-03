@@ -1,9 +1,6 @@
 package ac.uk.diamond.gdaApi.command;
 
-import ac.uk.diamond.gdaApi.client.serialization.Serializer;
-
-import java.io.*;
-import java.util.function.Function;
+import ac.uk.diamond.gdaApi.client.GdaConnection;
 
 /**
  * Allows user to run commands to and from a telnet server or similar.
@@ -11,32 +8,25 @@ import java.util.function.Function;
 public class ListNamesCommandWriter implements CommandRunner<String> {
 
     private static final String NULL_OUTPUT_ERROR_MESSAGE
-            = "Data output cannot be null";
+            = "GdaConnection cannot be null";
 
-    private DataOutput output;
+    private GdaConnection gda;
 
     public ListNamesCommandWriter(
-            DataOutput output) {
-        exceptOutputIfNull(output);
-        this.output = output;
+            GdaConnection gda) {
+        exceptOutputIfNull(gda);
+        this.gda = gda;
     }
 
-    private void exceptOutputIfNull(DataOutput output) {
-        if ( output == null )
+    private void exceptOutputIfNull(GdaConnection gda) {
+        if ( gda == null )
             throw new IllegalArgumentException(NULL_OUTPUT_ERROR_MESSAGE);
     }
 
     @Override
-    public void run(String commandModel) {
-        writeData(commandModel);
+    public void run(String message) {
+        gda.sendMessage(message);
     }
 
-    private void writeData(String serializedData) {
-        try {
-            output.writeChars(serializedData);
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
 
 }

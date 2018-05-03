@@ -1,6 +1,6 @@
 package ac.uk.diamond.gdaApi.command;
 
-import ac.uk.diamond.gdaApi.client.serialization.Serializer;
+import ac.uk.diamond.gdaApi.client.GdaConnection;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.Before;
@@ -20,11 +20,11 @@ public class CommandWriterTest {
     public final ExpectedException exception = ExpectedException.none();
 
     private ListNamesCommandWriter writer;
-    private DataOutput mockOutput;
+    private GdaConnection mockOutput;
 
     @Before
     public void setUp() {
-        mockOutput = makeMockWriter();
+        mockOutput = makeMockGda();
         writer = makeCommandWriter(mockOutput);
     }
 
@@ -48,22 +48,22 @@ public class CommandWriterTest {
         verifyCharsWritten(mockOutput, "1");
     }
 
-    private void verifyCharsWritten(DataOutput mockWriter, String chars)
+    private void verifyCharsWritten(GdaConnection mockGda, String chars)
             throws IOException {
-        verify(mockWriter, times(1)).writeChars(chars);
+        verify(mockGda, times(1)).sendMessage(chars);
     }
 
     private ListNamesCommandWriter makeCommandWriter(
-            DataOutput writer) {
-        return new ListNamesCommandWriter(writer);
+            GdaConnection gda) {
+        return new ListNamesCommandWriter(gda);
     }
 
-    private DataOutput makeMockWriter() {
-        return mock(DataOutput.class);
+    private GdaConnection makeMockGda() {
+        return mock(GdaConnection.class);
     }
 
-    private void makeMockWriterThrowIoException(DataOutput mockWriter) throws IOException {
-        doThrow(new IOException()).when(mockWriter).writeChars(any());
+    private void makeMockWriterThrowIoException(GdaConnection mockGda) throws IOException {
+        doThrow(new IOException()).when(mockGda).sendMessage(any());
     }
 
     private void expectIoException() {
