@@ -1,23 +1,27 @@
 package ac.uk.diamond.gdaApi.command;
 
+import ac.uk.diamond.gdaApi.client.serialization.Deserializer;
+
 import java.io.DataInput;
 import java.io.IOException;
+import java.util.List;
 import java.util.function.Function;
 
-public class CommandReader<TOutputModel>
-        implements CommandResultSupplier<TOutputModel> {
+public class ListNamesCommandOutput
+        implements CommandResultSupplier<List<String>> {
     private DataInput input;
-    private Function<String, TOutputModel> deserializer;
+    private Deserializer<String, List<String>> deserializer;
 
-    public CommandReader(
-            DataInput input, Function<String, TOutputModel> deserializer) {
+    public ListNamesCommandOutput(
+            DataInput input, Deserializer<String, List<String>> deserializer) {
         exceptInputIfNull(input);
         this.input = input;
         exceptDeserializerIfNull(deserializer);
         this.deserializer = deserializer;
     }
 
-    private void exceptDeserializerIfNull(Function<String, TOutputModel> deserializer) {
+    private void exceptDeserializerIfNull(Deserializer<String,
+            List<String>> deserializer) {
         if ( deserializer == null )
             throw new IllegalArgumentException(
                     "Deserializer input cannot be null");
@@ -29,7 +33,7 @@ public class CommandReader<TOutputModel>
     }
 
     @Override
-    public TOutputModel nextMessage() {
+    public List<String> nextMessage() {
         String raw = tryToReadRawInput();
         return tryToDeserialize(raw);
     }
@@ -42,7 +46,7 @@ public class CommandReader<TOutputModel>
         }
     }
 
-    private TOutputModel tryToDeserialize(String serializedData) {
-        return deserializer.apply(serializedData);
+    private List<String> tryToDeserialize(String serializedData) {
+        return deserializer.deserialize(serializedData);
     }
 }

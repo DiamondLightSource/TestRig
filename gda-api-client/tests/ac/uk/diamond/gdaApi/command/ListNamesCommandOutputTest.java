@@ -1,5 +1,6 @@
 package ac.uk.diamond.gdaApi.command;
 
+import ac.uk.diamond.gdaApi.client.serialization.Deserializer;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -7,25 +8,29 @@ import org.junit.rules.ExpectedException;
 
 import java.io.DataInput;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-public class CommandReaderTest {
+public class ListNamesCommandOutputTest {
+
+    private static final List<String> SINGLE_ITEM_LIST = Arrays.asList("Red");
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
-    private CommandReader<Integer> reader;
+    private ListNamesCommandOutput reader;
     private DataInput mockInput;
-    private Function<String, Integer> mockDeserializer;
+    private Deserializer<String, List<String>> mockDeserializer;
 
     @Before
     public void setUp() {
         mockDeserializer =
-                (Function<String, Integer>) mock(Function.class);
+                (Deserializer<String, List<String>>) mock(Deserializer.class);
         mockInput = mock(DataInput.class);
         reader = makeCommandReader(mockInput, mockDeserializer);
     }
@@ -54,20 +59,20 @@ public class CommandReaderTest {
     public void testDeserializerInvoked() throws IOException {
         when(mockInput.readUTF()).thenReturn("1");
         reader.nextMessage();
-        verify(mockDeserializer, times(1)).apply("1");
+        verify(mockDeserializer, times(1)).deserialize("1");
     }
 
     @Test
     public void testNextReadsString() throws IOException {
         when(mockInput.readUTF()).thenReturn("1");
-        when(mockDeserializer.apply("1")).thenReturn(1);
-        int next = reader.nextMessage();
-        assertEquals(1, next);
+        when(mockDeserializer.deserialize("1")).thenReturn(SINGLE_ITEM_LIST);
+        List<String> next = reader.nextMessage();
+        assertEquals(SINGLE_ITEM_LIST, next);
     }
 
-    private CommandReader<Integer> makeCommandReader(
-            DataInput input, Function<String, Integer> deserializer) {
-        return new CommandReader<>(input, deserializer);
+    private ListNamesCommandOutput makeCommandReader(
+            DataInput input, Deserializer<String, List<String>> deserializer) {
+        return new ListNamesCommandOutput(input, deserializer);
     }
 
     private void expectIoException() {
