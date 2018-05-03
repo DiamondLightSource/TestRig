@@ -1,5 +1,6 @@
 package ac.uk.diamond.gdaApi.command;
 
+import ac.uk.diamond.gdaApi.client.GdaConnection;
 import ac.uk.diamond.gdaApi.client.serialization.Deserializer;
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,14 +25,14 @@ public class ListNamesCommandOutputTest {
     public final ExpectedException exception = ExpectedException.none();
 
     private ListNamesCommandOutput reader;
-    private DataInput mockInput;
+    private GdaConnection mockInput;
     private Deserializer<String, List<String>> mockDeserializer;
 
     @Before
     public void setUp() {
         mockDeserializer =
                 (Deserializer<String, List<String>>) mock(Deserializer.class);
-        mockInput = mock(DataInput.class);
+        mockInput = mock(GdaConnection.class);
         reader = makeCommandReader(mockInput, mockDeserializer);
     }
 
@@ -51,27 +52,27 @@ public class ListNamesCommandOutputTest {
     public void testNextThrowsIoExceptionIfInputThrowsIoException()
             throws IOException {
         expectRuntimeException();
-        when(mockInput.readUTF()).thenThrow(new IOException());
+        when(mockInput.nextMessage()).thenThrow(new IOException());
         reader.nextMessage();
     }
 
     @Test
     public void testDeserializerInvoked() throws IOException {
-        when(mockInput.readUTF()).thenReturn("1");
+        when(mockInput.nextMessage()).thenReturn("1");
         reader.nextMessage();
         verify(mockDeserializer, times(1)).deserialize("1");
     }
 
     @Test
     public void testNextReadsString() throws IOException {
-        when(mockInput.readUTF()).thenReturn("1");
+        when(mockInput.nextMessage()).thenReturn("1");
         when(mockDeserializer.deserialize("1")).thenReturn(SINGLE_ITEM_LIST);
         List<String> next = reader.nextMessage();
         assertEquals(SINGLE_ITEM_LIST, next);
     }
 
     private ListNamesCommandOutput makeCommandReader(
-            DataInput input, Deserializer<String, List<String>> deserializer) {
+            GdaConnection input, Deserializer<String, List<String>> deserializer) {
         return new ListNamesCommandOutput(input, deserializer);
     }
 
