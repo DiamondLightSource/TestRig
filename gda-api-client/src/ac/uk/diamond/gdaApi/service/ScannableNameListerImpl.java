@@ -1,12 +1,8 @@
 package ac.uk.diamond.gdaApi.service;
 
-import ac.uk.diamond.gdaApi.client.GdaConnection;
-import ac.uk.diamond.gdaApi.client.serialization.Deserializer;
 import ac.uk.diamond.gdaApi.command.CommandResultSupplier;
 import ac.uk.diamond.gdaApi.command.CommandRunner;
-import ac.uk.diamond.gdaApi.command.CommandWriter;
 
-import java.util.Arrays;
 import java.util.List;
 
 

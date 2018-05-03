@@ -1,18 +1,6 @@
 package ac.uk.diamond.gdaApi;
 
 
-import ac.uk.diamond.gdaApi.client.ssh.SshConnectionDetails;
-import ac.uk.diamond.gdaApi.client.ssh.SshConnectionFacade;
-import ac.uk.diamond.gdaApi.command.CommandReader;
-import ac.uk.diamond.gdaApi.command.CommandResultSupplier;
-import ac.uk.diamond.gdaApi.command.CommandRunner;
-import ac.uk.diamond.gdaApi.command.CommandWriter;
-import ac.uk.diamond.gdaApi.service.ScannableNameLister;
-import ac.uk.diamond.gdaApi.service.ScannableNameListerImpl;
-import org.apache.sshd.client.SshClient;
-
-import java.util.List;
-
 public class SystemTest {
     public static void main(String[] args) {
         SystemTest test = new SystemTest();
