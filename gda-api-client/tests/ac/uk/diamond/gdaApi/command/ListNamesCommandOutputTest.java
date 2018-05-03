@@ -64,7 +64,7 @@ public class ListNamesCommandOutputTest {
     }
 
     @Test
-    public void testNextReadsString() throws IOException {
+    public void testRawItemReturnedAsSingleItemList() throws IOException {
         when(mockInput.nextMessage()).thenReturn("1");
         when(mockDeserializer.deserialize("1")).thenReturn(SINGLE_ITEM_LIST);
         List<String> next = reader.nextMessage();

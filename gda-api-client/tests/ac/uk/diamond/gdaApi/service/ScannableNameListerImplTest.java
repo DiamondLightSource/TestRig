@@ -48,7 +48,7 @@ public class ScannableNameListerImplTest {
     @Test
     public void testListScannablesCommandSentToGdaConnection() {
         nameLister.collectList();
-        verify(runner, times(1)).run("ls_names");
+        verify(runner, times(1)).run();
     }
 
     @Test

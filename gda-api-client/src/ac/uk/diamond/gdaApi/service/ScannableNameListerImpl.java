@@ -26,7 +26,7 @@ public class ScannableNameListerImpl implements ScannableNameLister {
 
     @Override
     public List<String> collectList() {
-        runner.run("ls_names");
+        runner.run();
         return resultSupplier.nextMessage();
     }
 

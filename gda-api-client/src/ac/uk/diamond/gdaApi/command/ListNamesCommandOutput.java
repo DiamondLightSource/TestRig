@@ -11,7 +11,8 @@ public class ListNamesCommandOutput
     private Deserializer<String, List<String>> deserializer;
 
     public ListNamesCommandOutput(
-            GdaConnection gda, Deserializer<String, List<String>> deserializer) {
+            GdaConnection gda,
+            Deserializer<String, List<String>> deserializer) {
         exceptInputIfNull(gda);
         this.gda = gda;
         exceptDeserializerIfNull(deserializer);

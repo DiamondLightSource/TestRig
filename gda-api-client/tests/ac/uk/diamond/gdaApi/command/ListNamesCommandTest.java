@@ -38,13 +38,13 @@ public class ListNamesCommandTest {
             throws IOException {
         expectRuntimeException();
         makeMockWriterThrowIoException(mockOutput);
-        writer.run("1");
+        writer.run();
     }
 
     @Test
     public void testWriterSendsString() throws IOException {
-        writer.run("1");
-        verifyCharsWritten(mockOutput, "1");
+        writer.run();
+        verifyCharsWritten(mockOutput, "ls_names");
     }
 
     private void verifyCharsWritten(GdaConnection mockGda, String chars)

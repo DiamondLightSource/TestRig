@@ -9,6 +9,7 @@ public class ListNamesCommand implements Command<String> {
 
     private static final String NULL_OUTPUT_ERROR_MESSAGE
             = "GdaConnection cannot be null";
+    public static final String COMMAND = "ls_names";
 
     private GdaConnection gda;
 
@@ -24,8 +25,8 @@ public class ListNamesCommand implements Command<String> {
     }
 
     @Override
-    public void run(String message) {
-        gda.sendMessage(message);
+    public void run() {
+        gda.sendMessage(COMMAND);
     }
 
 
