@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.rules.ExpectedException;
 
-import java.io.DataOutput;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
@@ -14,12 +13,12 @@ import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-public class CommandWriterTest {
+public class ListNamesCommandTest {
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
-    private ListNamesCommandWriter writer;
+    private ListNamesCommand writer;
     private GdaConnection mockOutput;
 
     @Before
@@ -53,9 +52,9 @@ public class CommandWriterTest {
         verify(mockGda, times(1)).sendMessage(chars);
     }
 
-    private ListNamesCommandWriter makeCommandWriter(
+    private ListNamesCommand makeCommandWriter(
             GdaConnection gda) {
-        return new ListNamesCommandWriter(gda);
+        return new ListNamesCommand(gda);
     }
 
     private GdaConnection makeMockGda() {

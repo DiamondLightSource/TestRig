@@ -1,7 +1,7 @@
 package ac.uk.diamond.gdaApi.service;
 
+import ac.uk.diamond.gdaApi.command.Command;
 import ac.uk.diamond.gdaApi.command.CommandResultSupplier;
-import ac.uk.diamond.gdaApi.command.CommandRunner;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,13 +22,13 @@ public class ScannableNameListerImplTest {
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
-    private CommandRunner runner;
+    private Command runner;
     private CommandResultSupplier resultSupplier;
     private ScannableNameLister nameLister;
 
     @Before
     public void setUp() {
-        runner = mock(CommandRunner.class);
+        runner = mock(Command.class);
         resultSupplier = mock(CommandResultSupplier.class);
         nameLister = new ScannableNameListerImpl(runner, resultSupplier);
     }

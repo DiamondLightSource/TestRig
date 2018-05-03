@@ -5,14 +5,14 @@ import ac.uk.diamond.gdaApi.client.GdaConnection;
 /**
  * Allows user to run commands to and from a telnet server or similar.
  */
-public class ListNamesCommandWriter implements CommandRunner<String> {
+public class ListNamesCommand implements Command<String> {
 
     private static final String NULL_OUTPUT_ERROR_MESSAGE
             = "GdaConnection cannot be null";
 
     private GdaConnection gda;
 
-    public ListNamesCommandWriter(
+    public ListNamesCommand(
             GdaConnection gda) {
         exceptOutputIfNull(gda);
         this.gda = gda;

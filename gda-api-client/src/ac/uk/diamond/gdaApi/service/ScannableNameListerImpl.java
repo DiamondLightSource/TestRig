@@ -1,22 +1,22 @@
 package ac.uk.diamond.gdaApi.service;
 
+import ac.uk.diamond.gdaApi.command.Command;
 import ac.uk.diamond.gdaApi.command.CommandResultSupplier;
-import ac.uk.diamond.gdaApi.command.CommandRunner;
 
 import java.util.List;
 
 
 public class ScannableNameListerImpl implements ScannableNameLister {
 
-    private final CommandRunner<String> runner;
+    private final Command<String> runner;
     private final CommandResultSupplier<List<String>> resultSupplier;
 
     public ScannableNameListerImpl(
-            CommandRunner<String> runner,
+            Command<String> runner,
             CommandResultSupplier<List<String>> resultSupplier) {
         if ( runner == null )
             throw new IllegalArgumentException("Cannot have a null " +
-                    "CommandRunner object");
+                    "Command object");
         if ( resultSupplier == null )
             throw new IllegalArgumentException("Cannot have a null " +
                     "CommandResultSupplier object");
